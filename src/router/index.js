@@ -1,16 +1,28 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import HelloWorld from "../components/HelloWorld.vue"
+import home from "../views/home.vue"
 Vue.use(Router);
 
-const routes = [
-    {
+const routes = [{
         path: '/',
         redirect: {
-            name: "HelloWorld"
+            name: "home"
         }
+
     },
-    { path: '/hello', component: HelloWorld, name: 'HelloWorld' },
+
+    {
+        path: '/home',
+        component: home,
+        name: 'home'
+    },
+    {
+        path: '/dashboard',
+        redirect: {
+            name: "dashboard"
+        }
+
+    }
 ];
 
 export function createRouter() {
@@ -22,9 +34,14 @@ export function createRouter() {
                 return savedPosition
             }
             if (to.hash) {
-                return { selector: to.hash }
+                return {
+                    selector: to.hash
+                }
             }
-            return { x: 0, y: 0 }
+            return {
+                x: 0,
+                y: 0
+            }
         }
     });
 
