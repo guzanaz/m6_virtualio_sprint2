@@ -12,7 +12,7 @@ import DashboardMenu from '../components/DashboardMenu.vue';
 import UserVMsTable from "../components/UserVMsTable.vue"
 
 export default {
-  name: "Dashboard",
+  name: "dashboard",
   components:{
     UserNavbar,
     DashboardMenu,
