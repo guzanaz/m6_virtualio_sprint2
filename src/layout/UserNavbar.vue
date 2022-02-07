@@ -77,7 +77,20 @@
           <nav class="mb-3 mt-5" aria-label="sidebar options">
             <b-nav vertical>
               <b-nav-item href="#link-1">El meu perfil</b-nav-item>
-              <b-nav-item v-b-toggle.collapse-3 href="#link-2">Las meves màquines</b-nav-item>
+              <b-nav-item v-b-toggle.collapse-3 href="#link-2">
+                <b-icon
+                    class="mx-1"
+                    icon="laptop"
+                    aria-label="virtual machines"
+                  ></b-icon>
+                  Las meves màquines
+                  <b-icon
+                    class="mx-1"
+                    icon="caret-down-fill"
+                    aria-label="virtual machines"
+                  ></b-icon>
+                  </b-nav-item>
+                  
               <b-collapse visible id="collapse-3">
                 <hr>
                   <b-nav-item>I should start open!</b-nav-item>
