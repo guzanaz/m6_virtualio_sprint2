@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Navbar />
     <LoginSection />
     <SobreVirtualio />
     <GoogleMap/>
@@ -9,6 +10,7 @@
 </template>
 
 <script>
+import Navbar from "../layout/Navbar.vue";
 import LoginSection from "../components/LoginSection.vue";
 import SobreVirtualio from "../components/SobreVirtualio.vue";
 import GoogleMap from "../components/GoogleMap.vue";
@@ -17,6 +19,7 @@ import ContactForm from "../components/ContactForm.vue";
 export default {
   name: "App",
   components: {
+    Navbar,
     LoginSection,
     SobreVirtualio,
     GoogleMap,
