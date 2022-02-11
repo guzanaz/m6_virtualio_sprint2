@@ -1,7 +1,10 @@
 <template>
   <div>
     <!--TOPfixednavbar Start-->
-    <nav class="navbar sticky-top navbar-expand-md navbar-light bg-light">
+    <nav
+      aria-label="user-navbar"
+      class="navbar sticky-top navbar-expand-md navbar-light bg-light"
+    >
       <div class="container">
         <div class="col-sm-1 col-md-1 col-lg-1 .col-xl-1 col-1">
           <b-button v-b-toggle.sidebar-no-header class="rounded-circle px-2">
@@ -53,8 +56,11 @@
         <div class="p-3">
           <b-container fluid class="text-light text-center">
             <b-row class="mb-3">
-
-              <b-col id="sidebar-no-header-title" cols="auto" class="mr-auto p-3">
+              <b-col
+                id="sidebar-no-header-title"
+                cols="auto"
+                class="mr-auto p-3"
+              >
                 <a class="navbar-brand" href="#">
                   <img
                     src="https://wiki.ead.pucv.cl/images/b/b2/Virtualio_logo.svg"
@@ -65,41 +71,36 @@
                 </a>
               </b-col>
               <b-col cols="auto" class="pl-3 py-3 pl-0">
-                <b-button block @click="hide" class="rounded-circle px-2" >
-                  <b-icon
-                    icon="x"
-                    aria-label="close menu"
-                  ></b-icon>
+                <b-button block @click="hide" class="rounded-circle px-2">
+                  <b-icon icon="x" aria-label="close menu"></b-icon>
                 </b-button>
               </b-col>
             </b-row>
           </b-container>
           <nav class="mb-3 mt-5" aria-label="sidebar options">
             <b-nav vertical>
-              <b-nav-item href="#link-1">El meu perfil</b-nav-item>
-              <b-nav-item v-b-toggle.collapse-3 href="#link-2">
+              <b-nav-item href="">
                 <b-icon
-                    class="mx-1"
-                    icon="laptop"
-                    aria-label="virtual machines"
-                  ></b-icon>
-                  Las meves màquines
-                  <b-icon
-                    class="mx-1"
-                    icon="caret-down-fill"
-                    aria-label="virtual machines"
-                  ></b-icon>
-                  </b-nav-item>
-                  
-              <b-collapse visible id="collapse-3">
-                <hr>
-                  <b-nav-item>I should start open!</b-nav-item>
-              </b-collapse>
+                  class="mx-1"
+                  icon="person-circle"
+                  aria-label="virtual machines"
+                ></b-icon>
+                El meu perfil
+              </b-nav-item>
+              <b-nav-item href="">
+                <b-icon
+                  class="mx-1"
+                  icon="laptop"
+                  aria-label="virtual machines"
+                ></b-icon>
+                Las meves màquines
+              </b-nav-item>
             </b-nav>
           </nav>
 
-          <b-button variant="outline-primary" block class="mb-2 px-5">
-           Crear màquina virtual <b-icon icon="plus-circle-fill" aria-hidden="true"></b-icon>
+          <b-button variant="outline-primary" block class="mb-2 py-3 px-5">
+            Crear màquina virtual
+            <b-icon icon="plus-circle-fill" aria-hidden="true"></b-icon>
           </b-button>
         </div>
       </template>
@@ -132,4 +133,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.dropdown-header {
+  visibility: hidden;
+}
+
+hr .b-dropdown-divider {
+  color: #0d6efd;
+  opacity: 100%;
+}
 </style>
