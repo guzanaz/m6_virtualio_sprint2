@@ -1,21 +1,18 @@
 <template>
   <div class="hello">
   <UserNavbar/>
-  <DashboardMenu/>  
   <UserVMsTable/>
   </div>
 </template>
 
 <script>
 import UserNavbar from "../layout/UserNavbar.vue";
-import DashboardMenu from '../components/DashboardMenu.vue';
 import UserVMsTable from "../components/UserVMsTable.vue"
 
 export default {
   name: "dashboard",
   components:{
     UserNavbar,
-    DashboardMenu,
     UserVMsTable,
 
   },  

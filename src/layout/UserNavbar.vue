@@ -32,13 +32,16 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+  
+
         <div
           class="collapse navbar-collapse justify-content-end"
           id="navbarNav"
         >
           <ul class="navbar-nav text-center">
             <li class="nav-item">
-              <a class="nav-link" href="#contacte">Contacte</a>
+                <b-avatar src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8cGVyc29uYXxlbnwwfHwwfHw%3D&w=1000&q=80"></b-avatar>
+
             </li>
           </ul>
         </div>
@@ -97,11 +100,12 @@
               </b-nav-item>
             </b-nav>
           </nav>
-
-          <b-button variant="outline-primary" block class="mb-2 py-3 px-5">
-            Crear màquina virtual
-            <b-icon icon="plus-circle-fill" aria-hidden="true"></b-icon>
-          </b-button>
+            <router-link :to='{name:createVm}' >
+              <b-button variant="outline-primary" block class="mb-2 py-3 px-5">
+              Crear màquina virtual
+                <b-icon icon="plus-circle-fill" aria-hidden="true"></b-icon>
+              </b-button>
+            </router-link>
         </div>
       </template>
     </b-sidebar>
