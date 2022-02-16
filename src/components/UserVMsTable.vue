@@ -25,9 +25,20 @@
             :current-page="currentPage"
             :fields="fields"
           >
-            <template v-slot:cell(actions)="data">
+            <template v-slot:cell(edit)="data">
+              <b-button variant="dark"
+              :to="{
+                name:'editVm',
+                params:{VirtualMachineid: data.item.id}
+              }"
+              tag="button"
+              >
+              <b-icon icon="gear-fill" aria-hidden="true"></b-icon>
+              </b-button>
+            </template>
+            <template v-slot:cell(delete)="data">
               <b-button variant="danger" @click="deleteItem(data.item.id)">
-                Delete
+              <b-icon icon="trash-fill" aria-hidden="true"></b-icon>
               </b-button>
             </template>
           </b-table>
@@ -62,52 +73,56 @@ export default {
       },
       {
         key: "Name",
-        label: "Name",
-        sortable: true
+        label: "Nom",
+        sortable: false
       },
       {
         key: "OS",
-        label: "OS",
-        sortable: true
+        label: "SO",
+        sortable: false
       },
       {
         key: "Version",
-        label: "Version",
-        sortable: true
+        label: "Versió",
+        sortable: false
       },
       {
         key: "Ram_size",
-        label: "Ram",
-        sortable: true
+        label: "Mida Ram",
+        sortable: false
       },
       {
         key: "Disk_capacity",
-        label: "SSD",
-        sortable: true
+        label: "Mida Disc dur",
+        sortable: false
       },
       {
         key: "Description",
-        label: "Descripción",
-        sortable: true
+        label: "Descripció",
+        sortable: false
       },
       {
         key: "created_at",
-        label: "Created at",
-        sortable: true
+        label: "Data creació",
+        sortable: false
       },
       {
         key: "updated_at",
-        label: "updated at",
-        sortable: true
+        label: "Data actualització",
+        sortable: false
       },
       {
         key: "Power_on",
-        label: "Power on",
-        sortable: true
+        label: "Encès",
+        sortable: false
       },
       {
-        key: "actions",
-        label: "Actions",
+        key: "edit",
+        label: "Editar",
+      },
+      {
+        key: "delete",
+        label: "Esborrar",
       },
     ],
     filter: "",
@@ -120,22 +135,48 @@ export default {
     },
   },
   methods: {
-    deleteItem(id) {
-      const index = this.items.findIndex((x) => x.id === id);
-      this.items.splice(index, 1);
+
+      deleteItem(id) {
+          axios.delete("http://127.0.0.1:8000/api/VirtualMachine/"+id)
+                    .then((res) => {
+                        console.log(res);
+                        const index = this.items.map(data => data.id).indexOf(id);
+                        this.items.splice(index, 1);
+                    });
     },
-  }
+
+
+}
+
+    // //API Call
+    // axios.delete("http://127.0.0.1:8000/api/VirtualMachine{virtualMachine}"),params: {
+    //   //pushing data to items that will show inside table
+    //   this.items = res.data;
+    // });
+
+    // deleteItem(id) {
+    //   const index = this.items.findIndex((x) => x.id === id);
+    //   this.items.splice(index, 1);
+    // },
+
 
 };
 </script>
 
 <style scooped>
 
-th{
-font-size:0.9rem;
+.table > thead{
+ vertical-align: middle;
 }
-.sr-only span {
-font-size:0.7rem;
-color: lightslategray;
+
+th {
+font-size:0.8rem;
 }
+
+tr{
+  font-size: 0.8rem;
+}
+
+
+.sr-only{display:none !important}
 </style>

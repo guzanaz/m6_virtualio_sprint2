@@ -54,6 +54,8 @@
       aria-label="virtualio side-bar"
       no-header
       shadow
+      :backdrop-variant="variant"
+      backdrop
     >
       <template #default="{ hide }">
         <div class="p-3">
@@ -81,7 +83,7 @@
             </b-row>
           </b-container>
           <nav class="mb-3 mt-5" aria-label="sidebar options">
-            <b-nav vertical>
+            <b-nav vertical >
               <b-nav-item href="">
                 <b-icon
                   class="mx-1"
