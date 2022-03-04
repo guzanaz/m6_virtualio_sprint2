@@ -92,7 +92,6 @@
                     <b-button
                       v-b-modal.modal-vm-capacity
                       class="px-4"
-                  
                       variant="primary"
                       >Continuar</b-button
                     >
@@ -106,6 +105,7 @@
       <b-modal
         body-class="p-0"
         id="modal-vm-capacity"
+        no-stacking
         hide-header
         hide-footer
         title="Editant capacitat de la màquina Virtual"
@@ -114,7 +114,7 @@
         @hidden="resetModal"
         @ok="handleOk"
       >
-        <!-- grupo para editar nombre de la máquina virtual -->
+        <!-- grupo para editar capacidad de la máquina virtual -->
         <b-container fluid="sm">
           <b-row>
             <b-col cols="4" class="bg-secondary py-3">
@@ -122,7 +122,7 @@
                 <b-row class="mt-3">
                   <b-img
                     center
-                    src="https://svgshare.com/i/emu.svg"
+                    src="https://svgshare.com/i/esL.svg' title='modal_img2"
                     alt="Center image"
                   ></b-img>
                 </b-row>
@@ -130,11 +130,57 @@
                   align-h="center"
                   class="row mt-4 mb-4 text-light text-center"
                 >
-                  <h5>Configuració Inicial</h5>
+                  <h5>Mida de les memòries</h5>
                   <p class="font-weight-light">
-                    És hora de posar un nom a la teva màquina, definir un
-                    sistema operatiu i una versió del mateix.
+                    Fixa la mida de la RAM en Megabytes (MB) per a la teva
+                    màquina y assigna la mida de disc dur virtual.
                   </p>
+                </b-row>
+                <b-row align-h="center" class="row mb-4 text-light text-center">
+                  <b-progress :value="value" class="w-100"></b-progress>
+                </b-row>
+              </b-container>
+            </b-col>
+            <!-- -->
+            <b-col cols="8">
+              <b-container fluid>
+                <b-row align-h="start" class="mx-0 mt-5 mb-2">
+                  <h2>Memòries</h2>
+                </b-row>
+                <div class="pt-5">
+                  <label for="ram_size"
+                    >RAM ({{ form.RamSize }} Megabytes)</label
+                  >
+                  <b-form-input
+                    id="ram_size"
+                    v-model="form.RamSize"
+                    type="range"
+                    min="4"
+                    max="16"
+                  >
+                  </b-form-input>
+                </div>
+                <div class="pt-5">
+                  <label for="disk_capacity"
+                    >Disc Dur Virtual ({{ form.DiskCapacity}} Gigabytes)</label
+                  >
+                  <b-form-input
+                    id="disk_capacity"
+                    v-model="form.DiskCapacity"
+                    type="range"
+                    min="10"
+                    max="50"
+                  >
+                  </b-form-input>
+                </div>
+                <b-row align-h="end" class="mx-0 mt-5 py-4">
+                  <b-button @click="showModal" variant="outline-secondary">Enrere</b-button>
+                  <b-button
+                    type="submit"
+                    class="px-4"
+                    variant="primary"
+                    >Crear</b-button
+                  >
                 </b-row>
               </b-container>
             </b-col>
@@ -145,92 +191,10 @@
 
     <div>
       <!-- inicio form -->
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-        <b-form-group id="input-group-1" label="Nom" label-for="input-1">
-          <b-form-input
-            id="input-1"
-            v-model="form.name"
-            placeholder="Enter name"
-            required
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group
-          id="input-group-2"
-          label="Sistema Operatiu"
-          label-for="input-2"
-        >
-          <b-form-select
-            id="input-2"
-            v-model="form.OS"
-            :options="OS"
-            required
-          ></b-form-select>
-        </b-form-group>
-
-        <b-form-group
-          id="input-group-3"
-          label="Sistema Operatiu:"
-          label-for="input-3"
-        >
-          <b-form-select
-            id="input-3"
-            v-model="form.Version"
-            :options="Version"
-            required
-          ></b-form-select>
-        </b-form-group>
-
-        <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
-      </b-form>
-      <!-- fin del form -->
       <b-card class="mt-3" header="Form Data Result">
         <pre class="m-0">{{ form }}</pre>
       </b-card>
 
-      <!-- inicio form -->
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-        <b-form-group id="input-group-1" label="Your Name:" label-for="input-1">
-          <b-form-input
-            id="input-1"
-            v-model="form.name"
-            placeholder="Enter name"
-            required
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group
-          id="input-group-2"
-          label="Sistema Operatiu:"
-          label-for="input-2"
-        >
-          <b-form-select
-            id="input-2"
-            v-model="form.OS"
-            :options="OS"
-            required
-          ></b-form-select>
-        </b-form-group>
-
-        <b-form-group
-          id="input-group-3"
-          label="Sistema Operatiu:"
-          label-for="input-3"
-        >
-          <b-form-select
-            id="input-3"
-            v-model="form.Version"
-            :options="Version"
-            required
-          ></b-form-select>
-        </b-form-group>
-
-        <b-row align-h="end">
-          <b-button cols="2" type="submit" variant="primary">Submit</b-button>
-          <b-button cols="2" type="reset" variant="danger">Reset</b-button>
-        </b-row>
-      </b-form>
       <!-- fin del form -->
     </div>
   </div>
@@ -246,12 +210,14 @@ export default {
   },
   data() {
     return {
-      value: 0,
+      value: 50,
       modalShow: false,
       form: {
         name: "",
         OS: null,
         Version: null,
+        RamSize: 0,
+        DiskCapacity:0,
       },
       OS: [{ text: "Definir", value: null }, "Linux", "Mac OS", "Windows"],
 
@@ -302,6 +268,8 @@ export default {
       this.form.name = "";
       this.form.OS = null;
       this.form.Version = null;
+      this.form.RamSize =0;
+      this.form.DiskCapacity=0;
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {
