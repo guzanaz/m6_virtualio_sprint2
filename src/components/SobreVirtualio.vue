@@ -26,6 +26,7 @@
           </div>
           <div class="col-xxl-2 col-lg-3 col-md-3 my-md-4 col-sm-6 col-12 my-sm-3 my-4 text-center">
             <img src="../assets/Logos/logitech.png" class="img-fluid" alt="..." />
+          
           </div>
           </div>
         </div>

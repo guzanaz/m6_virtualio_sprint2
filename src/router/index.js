@@ -5,6 +5,7 @@ import dashboard from "../views/dashboard.vue"
 import pruebaAPI from "../views/pruebaAPI.vue"
 import createVm from "../views/createVm.vue"
 import editVm from "../views/editVm.vue"
+import modaltest from "../views/Modaltest.vue"
 
 Vue.use(Router);
 
@@ -44,6 +45,12 @@ const routes = [{
         path: '/pruebaAPI',
         component: pruebaAPI,
         name: 'pruebaAPI'
+    },
+
+    {
+        path: '/Modaltest',
+        component: modaltest,
+        name: 'modaltest'
     }
 
 ];

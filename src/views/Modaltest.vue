@@ -1,0 +1,319 @@
+<template>
+  <div>
+    <UserNavbar />
+
+    <b-container class="my-5 d-flex justify-content-center" md="12" lg="12">
+      <b-button id="show-btn" @click="showModal" variant="dark">
+        <b-icon icon="gear-fill" aria-hidden="true"></b-icon>
+      </b-button>
+      <b-modal
+        body-class="p-0"
+        ref="modal"
+        no-stacking
+        hide-header
+        hide-footer
+        title="Editant màquina Virtual"
+        size="lg"
+        @show="resetModal"
+        @hidden="resetModal"
+        @ok="handleOk"
+      >
+        <!-- grupo para editar nombre de la máquina virtual -->
+        <b-container fluid="sm">
+          <b-row>
+            <b-col cols="4" class="bg-secondary py-3">
+              <b-container>
+                <b-row class="mt-3">
+                  <b-img
+                    center
+                    src="https://svgshare.com/i/emu.svg"
+                    alt="Center image"
+                  ></b-img>
+                </b-row>
+                <b-row
+                  align-h="center"
+                  class="row mt-4 mb-4 text-light text-center"
+                >
+                  <h5>Configuració Inicial</h5>
+                  <p class="font-weight-light">
+                    És hora de posar un nom a la teva màquina, definir un
+                    sistema operatiu i una versió del mateix.
+                  </p>
+                </b-row>
+
+                <b-row align-h="center" class="row mb-4 text-light text-center">
+                  <b-progress :value="value" class="w-100"></b-progress>
+                </b-row>
+              </b-container>
+            </b-col>
+            <b-col cols="8">
+              <b-container fluid>
+                <b-row align-h="start" class="mx-0 mt-5 mb-2">
+                  <h2>La teva màquina</h2>
+                </b-row>
+                <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+                  <b-form-group
+                    id="input-group-1"
+                    label="Nom"
+                    label-for="input-1"
+                  >
+                    <b-form-input
+                      id="input-1"
+                      v-model="form.name"
+                      placeholder="El nom de la teva màquina"
+                      required
+                    ></b-form-input>
+                  </b-form-group>
+                  <b-form-group
+                    id="input-group-2"
+                    label="Sistema Operatiu"
+                    label-for="input-2"
+                  >
+                    <b-form-select
+                      id="input-2"
+                      v-model="form.OS"
+                      :options="OS"
+                      required
+                    ></b-form-select>
+                  </b-form-group>
+                  <b-form-group
+                    id="input-group-3"
+                    label="Versió"
+                    label-for="input-3"
+                  >
+                    <b-form-select
+                      id="input-3"
+                      v-model="form.Version"
+                      :options="Version"
+                      required
+                    ></b-form-select>
+                  </b-form-group>
+                  <b-row align-h="end" class="mx-0 mt-5 mb-4">
+                    <b-button
+                      v-b-modal.modal-vm-capacity
+                      class="px-4"
+                  
+                      variant="primary"
+                      >Continuar</b-button
+                    >
+                  </b-row>
+                </b-form>
+              </b-container>
+            </b-col>
+          </b-row>
+        </b-container>
+      </b-modal>
+      <b-modal
+        body-class="p-0"
+        id="modal-vm-capacity"
+        hide-header
+        hide-footer
+        title="Editant capacitat de la màquina Virtual"
+        size="lg"
+        @show="resetModal"
+        @hidden="resetModal"
+        @ok="handleOk"
+      >
+        <!-- grupo para editar nombre de la máquina virtual -->
+        <b-container fluid="sm">
+          <b-row>
+            <b-col cols="4" class="bg-secondary py-3">
+              <b-container>
+                <b-row class="mt-3">
+                  <b-img
+                    center
+                    src="https://svgshare.com/i/emu.svg"
+                    alt="Center image"
+                  ></b-img>
+                </b-row>
+                <b-row
+                  align-h="center"
+                  class="row mt-4 mb-4 text-light text-center"
+                >
+                  <h5>Configuració Inicial</h5>
+                  <p class="font-weight-light">
+                    És hora de posar un nom a la teva màquina, definir un
+                    sistema operatiu i una versió del mateix.
+                  </p>
+                </b-row>
+              </b-container>
+            </b-col>
+          </b-row>
+        </b-container>
+      </b-modal>
+    </b-container>
+
+    <div>
+      <!-- inicio form -->
+      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+        <b-form-group id="input-group-1" label="Nom" label-for="input-1">
+          <b-form-input
+            id="input-1"
+            v-model="form.name"
+            placeholder="Enter name"
+            required
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+          id="input-group-2"
+          label="Sistema Operatiu"
+          label-for="input-2"
+        >
+          <b-form-select
+            id="input-2"
+            v-model="form.OS"
+            :options="OS"
+            required
+          ></b-form-select>
+        </b-form-group>
+
+        <b-form-group
+          id="input-group-3"
+          label="Sistema Operatiu:"
+          label-for="input-3"
+        >
+          <b-form-select
+            id="input-3"
+            v-model="form.Version"
+            :options="Version"
+            required
+          ></b-form-select>
+        </b-form-group>
+
+        <b-button type="submit" variant="primary">Submit</b-button>
+        <b-button type="reset" variant="danger">Reset</b-button>
+      </b-form>
+      <!-- fin del form -->
+      <b-card class="mt-3" header="Form Data Result">
+        <pre class="m-0">{{ form }}</pre>
+      </b-card>
+
+      <!-- inicio form -->
+      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+        <b-form-group id="input-group-1" label="Your Name:" label-for="input-1">
+          <b-form-input
+            id="input-1"
+            v-model="form.name"
+            placeholder="Enter name"
+            required
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group
+          id="input-group-2"
+          label="Sistema Operatiu:"
+          label-for="input-2"
+        >
+          <b-form-select
+            id="input-2"
+            v-model="form.OS"
+            :options="OS"
+            required
+          ></b-form-select>
+        </b-form-group>
+
+        <b-form-group
+          id="input-group-3"
+          label="Sistema Operatiu:"
+          label-for="input-3"
+        >
+          <b-form-select
+            id="input-3"
+            v-model="form.Version"
+            :options="Version"
+            required
+          ></b-form-select>
+        </b-form-group>
+
+        <b-row align-h="end">
+          <b-button cols="2" type="submit" variant="primary">Submit</b-button>
+          <b-button cols="2" type="reset" variant="danger">Reset</b-button>
+        </b-row>
+      </b-form>
+      <!-- fin del form -->
+    </div>
+  </div>
+</template>
+
+<script>
+import UserNavbar from "../layout/UserNavbar.vue";
+
+export default {
+  name: "ModalTest",
+  components: {
+    UserNavbar,
+  },
+  data() {
+    return {
+      value: 0,
+      modalShow: false,
+      form: {
+        name: "",
+        OS: null,
+        Version: null,
+      },
+      OS: [{ text: "Definir", value: null }, "Linux", "Mac OS", "Windows"],
+
+      Version: [{ text: "Definir", value: null }, "1", "2", "3"],
+      show: true,
+    };
+  },
+  methods: {
+    //1. modal methods
+    showModal() {
+      this.$refs["modal"].show();
+    },
+    hideModal() {
+      this.$refs["modal"].hide();
+    },
+
+    resetModal() {
+      this.name = "";
+      this.nameState = null;
+    },
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault();
+      // Trigger submit handler
+      this.handleSubmit();
+    },
+    handleSubmit() {
+      // Exit when the form isn't valid
+      if (!this.checkFormValidity()) {
+        return;
+      }
+      // Push the name to submitted names
+      this.submittedNames.push(this.name);
+      // Hide the modal manually
+      this.$nextTick(() => {
+        this.$bvModal.hide("modal-prevent-closing");
+      });
+    },
+
+    //2. form methods
+    onSubmit(event) {
+      event.preventDefault();
+      alert(JSON.stringify(this.form));
+    },
+    onReset(event) {
+      event.preventDefault();
+      // Reset our form values
+      this.form.name = "";
+      this.form.OS = null;
+      this.form.Version = null;
+      // Trick to reset/clear native browser form validation state
+      this.show = false;
+      this.$nextTick(() => {
+        this.show = true;
+      });
+    },
+  },
+};
+</script>
+
+<style scoped>
+.modal-body {
+  padding: 0;
+}
+</style>
