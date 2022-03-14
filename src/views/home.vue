@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar />
-    <LoginSection />
+    <LoginSectiontest />
     <SobreVirtualio />
     <GoogleMap/>
     <ContactForm />
@@ -11,7 +11,7 @@
 
 <script>
 import Navbar from "../layout/Navbar.vue";
-import LoginSection from "../components/LoginSection.vue";
+import LoginSectiontest from "../components/LoginSectiontest.vue";
 import SobreVirtualio from "../components/SobreVirtualio.vue";
 import GoogleMap from "../components/GoogleMap.vue";
 import ContactForm from "../components/ContactForm.vue";
@@ -20,7 +20,7 @@ export default {
   name: "App",
   components: {
     Navbar,
-    LoginSection,
+    LoginSectiontest,
     SobreVirtualio,
     GoogleMap,
     ContactForm

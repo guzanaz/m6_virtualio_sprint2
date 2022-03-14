@@ -51,7 +51,7 @@
                 <b-row align-h="start" class="mx-0 mt-5 mb-2">
                   <h2>La teva màquina</h2>
                 </b-row>
-                <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+               
                   <b-form-group
                     id="input-group-1"
                     label="Nom"
@@ -96,7 +96,7 @@
                       >Continuar</b-button
                     >
                   </b-row>
-                </b-form>
+   
               </b-container>
             </b-col>
           </b-row>
@@ -147,6 +147,7 @@
                 <b-row align-h="start" class="mx-0 mt-5 mb-2">
                   <h2>Memòries</h2>
                 </b-row>
+                <b-form @submit="onSubmit" @reset="onReset" v-if="show">
                 <div class="pt-5">
                   <label for="ram_size"
                     >RAM ({{ form.RamSize }} Megabytes)</label
@@ -181,7 +182,9 @@
                     variant="primary"
                     >Crear</b-button
                   >
+                
                 </b-row>
+                </b-form>
               </b-container>
             </b-col>
           </b-row>
@@ -210,7 +213,7 @@ export default {
   },
   data() {
     return {
-      value: 50,
+      value: 0,
       modalShow: false,
       form: {
         name: "",
