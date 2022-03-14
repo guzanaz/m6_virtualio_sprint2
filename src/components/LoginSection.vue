@@ -23,9 +23,10 @@
                         >Virtualio</a
                       >
                       <p class="opacity-75 text-white">
-                        Benvingut/benvinguda! <br>Aquí podràs crear i manipular
-                        màquines virtuals per acompanyar-te en el teu procés
-                        d'aprenentatge, tant si ets alumne/a de SMX o ASIX.
+                        Benvingut/benvinguda! <br />Aquí podràs crear i
+                        manipular màquines virtuals per acompanyar-te en el teu
+                        procés d'aprenentatge, tant si ets alumne/a de SMX o
+                        ASIX.
                       </p>
                     </div>
                   </div>
@@ -128,6 +129,7 @@
                         >
                         <input
                           class="form-control"
+                          v-model="form.email"
                           id="card-email"
                           type="email"
                         />
@@ -142,6 +144,7 @@
                           class="form-control"
                           id="card-password"
                           type="password"
+                          v-model="form.password"
                         />
                       </div>
                       <div class="row flex-between-center">
@@ -171,6 +174,7 @@
                         <button
                           class="btn btn-primary d-block w-100 mt-3"
                           type="submit"
+                          @click.prevent="login"
                           name="submit"
                         >
                           Log In
@@ -212,8 +216,24 @@
 </template>
 
 <script>
+import User from "../apis/User";
+
+
 export default {
   name: "LoginSection",
+  data() {
+    return {
+      form: {
+        email: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    login() {
+        User.login(this.form);
+    },
+  },
 };
 </script>
 
