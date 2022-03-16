@@ -133,6 +133,9 @@
                           id="card-email"
                           type="email"
                         />
+                        <span class="text-danger" v-if="errors.email">
+                          {{ errors.email[0] }}
+                        </span>
                       </div>
                       <div class="mb-3">
                         <div class="d-flex justify-content-between">
@@ -146,6 +149,9 @@
                           type="password"
                           v-model="form.password"
                         />
+                        <span class="text-danger" v-if="errors.password">
+                          {{ errors.password[0] }}
+                        </span>
                       </div>
                       <div class="row flex-between-center">
                         <div class="col-auto">
@@ -218,7 +224,6 @@
 <script>
 import User from "../apis/User";
 
-
 export default {
   name: "LoginSection",
   data() {
@@ -227,11 +232,16 @@ export default {
         email: "",
         password: "",
       },
+      errors: []
     };
   },
   methods: {
     login() {
-        User.login(this.form);
+      User.login(this.form).catch((error) => {
+        if (error.response.status === 422) {
+          this.error = error.response.data.error;
+        }
+      });
     },
   },
 };
