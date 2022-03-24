@@ -30,70 +30,7 @@
                       </p>
                     </div>
                   </div>
-                  <div class="position-relative px-lg-4 px-md-4 px-4 light">
-                    <div
-                      class="
-                        p-3
-                        bd-example
-                        container
-                        border border-light
-                        rounded
-                      "
-                    >
-                      <div
-                        class="
-                          px-3
-                          text-start
-                          px-md-1
-                          py-1
-                          bd-example
-                          container
-                        "
-                      >
-                        <div
-                          class="
-                            d-flex
-                            justify-content-evenly
-                            form-check form-switch
-                            mb-3
-                            text-light
-                          "
-                        >
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            id="flexSwitchCheckDefault"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="flexSwitchCheckDefault"
-                            >Sóc estudiant de SMX</label
-                          >
-                        </div>
-                        <div
-                          class="
-                            d-flex
-                            justify-content-evenly
-                            form-check form-switch
-                            text-light
-                          "
-                        >
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            role="switch"
-                            id="flexSwitchCheckDefault"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="flexSwitchCheckDefault"
-                            >Sóc estudiant de ASIX</label
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+    
                   <div class="mt-3 mb-4 mt-md-4 mb-md-5 light">
                     <p
                       class="
@@ -116,7 +53,7 @@
                 <div class="col-md-7 d-flex flex-center">
                   <div class="p-4 p-md-5 flex-grow-1">
                     <div class="row flex-between-center">
-                      <div class="col-auto">
+                      <div class="col-auto mb-4 ">
                         <h3>Inicia la teva sessió</h3>
                       </div>
                     </div>
@@ -153,8 +90,8 @@
                           {{ errors.password[0] }}
                         </span>
                       </div>
-                      <div class="row flex-between-center">
-                        <div class="col-auto">
+                      <div class="row flex-between-center mb-3">
+                        <div class="col-auto align-self-center">
                           <div class="form-check mb-0">
                             <input
                               class="form-check-input"
@@ -178,11 +115,10 @@
                       </div>
                       <div class="mb-3">
                         <button
-                          class="btn btn-primary d-block w-100 mt-3"
+                          class="btn btn-primary ml-0 w-100 mt-3"
                           type="submit"
                           @click.prevent="login"
-                          name="submit"
-                        >
+                          name="submit">
                           Log In
                         </button>
                       </div>
@@ -193,7 +129,7 @@
                     <div class="mb-3">
                       <button
                         type="button"
-                        class="btn d-block w-100 mt-3 btn-outline-secondary"
+                        class="btn ml-0 w-100 btn-outline-secondary"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -224,6 +160,7 @@
 <script>
 import User from "../apis/User";
 
+
 export default {
   name: "LoginSection",
   data() {
@@ -237,9 +174,14 @@ export default {
   },
   methods: {
     login() {
-      User.login(this.form).catch((error) => {
+      User.login(this.form)
+      .then(() => {
+        localStorage.setItem("auth", "true");
+        this.$router.push({name:"dashboard"});
+      })
+      .catch((error) => {
         if (error.response.status === 422) {
-          this.error = error.response.data.error;
+          this.errors = error.response.data.errors;
         }
       });
     },

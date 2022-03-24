@@ -1,6 +1,6 @@
 <template>
-  <footer class="bd-footer py-5 mt-5 bg-light">
-    <div class="container py-5">
+  <footer class="py-5 bg-light">
+    <b-container class="py-5">
       <div class="row">
         <div class="col-lg-3 mb-3">
           <a
@@ -88,7 +88,7 @@
           </ul>
         </div>
       </div>
-    </div>
+    </b-container>
   </footer>
 </template>
 
