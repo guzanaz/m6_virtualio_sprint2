@@ -2,7 +2,7 @@
   <div class="gradient-bg">
     <UserNavbarSprint3 />
     <div>
-      <b-container>
+      <b-container :style="{ 'background-image': 'url(${bgImage})' }">
         <b-card
           bg-variant="white"
           text-variant="dark"
@@ -33,6 +33,9 @@ export default {
     UserNavbarSprint3,
     UserVMsTable,
   },
+  data: () => ({
+    bgImage: require("../assets/bg.png"),
+  }),
 };
 </script>
 
@@ -40,31 +43,11 @@ export default {
 <style scoped>
 .gradient-bg {
   padding-bottom: 30px;
-  background: rgb(255, 131, 100);
-  background: -moz-linear-gradient(
-    180deg,
-    rgba(255, 131, 100, 1) 0%,
-    rgba(255, 147, 80, 1) 28%,
-    rgba(255, 184, 66, 1) 49%,
-    rgba(255, 211, 51, 1) 77%,
-    rgba(255, 184, 66, 1) 100%
-  );
-  background: -webkit-linear-gradient(
-    180deg,
-    rgba(255, 131, 100, 1) 0%,
-    rgba(255, 147, 80, 1) 28%,
-    rgba(255, 184, 66, 1) 49%,
-    rgba(255, 211, 51, 1) 77%,
-    rgba(255, 184, 66, 1) 100%
-  );
-  background: linear-gradient(
-    180deg,
-    rgba(255, 131, 100, 1) 0%,
-    rgba(255, 147, 80, 1) 28%,
-    rgba(255, 184, 66, 1) 49%,
-    rgba(255, 211, 51, 1) 77%,
-    rgba(255, 184, 66, 1) 100%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff8364",endColorstr="#ffb842",GradientType=1);
+
+  background: url(/src/assets/bg.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 </style>
