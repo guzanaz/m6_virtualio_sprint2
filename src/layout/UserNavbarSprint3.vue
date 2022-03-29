@@ -60,12 +60,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.dropdown-header {
-  visibility: hidden;
-}
 
-hr .b-dropdown-divider {
-  color: #0d6efd;
-  opacity: 100%;
-}
 </style>

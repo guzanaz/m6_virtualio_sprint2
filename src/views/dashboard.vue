@@ -2,7 +2,7 @@
   <div class="gradient-bg">
     <UserNavbarSprint3 />
     <div>
-      <b-container :style="{ 'background-image': 'url(${bgImage})' }">
+      <b-container>
         <b-card
           bg-variant="white"
           text-variant="dark"
@@ -27,15 +27,18 @@
 import UserNavbarSprint3 from "../layout/UserNavbarSprint3.vue";
 import UserVMsTable from "../components/UserVMsTable.vue";
 
+
 export default {
   name: "dashboard",
   components: {
     UserNavbarSprint3,
     UserVMsTable,
   },
-  data: () => ({
-    bgImage: require("../assets/bg.png"),
-  }),
+  data: function(){
+  return {
+    bg:{  }
+  }
+  }
 };
 </script>
 
@@ -43,11 +46,11 @@ export default {
 <style scoped>
 .gradient-bg {
   padding-bottom: 30px;
-
-  background: url(/src/assets/bg.png) no-repeat center center fixed;
+  background: url(https://i.ibb.co/PFYnM1f/bg.png)  no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
 </style>
+
