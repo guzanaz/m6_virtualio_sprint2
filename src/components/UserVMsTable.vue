@@ -190,7 +190,7 @@ export default {
       },
     ],
     filter: "",
-    perPage: 4,
+    perPage: 6,
     currentPage: 1,
   }),
   computed: {

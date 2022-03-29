@@ -16,16 +16,16 @@
         <div class="col-lg-12 col-xxl-8 position-relative">
           <div class="row  my-xxl-4 my-lg-5 my-md-3 my-sm-2">
           <div class="col-xxl-2 col-lg-3 col-md-3 my-md-4 col-sm-6 col-12 my-sm-3 my-4  text-center">
-            <img src="../assets/Logos/gestcloud.png" class="img-fluid" alt="..." />
+            <img src="../assets/img/logos/gestcloud.png" class="img-fluid" alt="..." />
           </div>
           <div class="col-xxl-2 col-lg-3 col-md-3 my-md-4 col-sm-6 col-12 my-sm-3 my-4 text-center">
-            <img src="../assets/Logos/google.png" class="img-fluid" alt="..." />
+            <img src="../assets/img/logos/google.png" class="img-fluid" alt="..." />
           </div>
           <div class="col-xxl-2 col-lg-3 col-md-3 my-md-4 col-sm-6 col-12 my-sm-3 my-4 text-center">
-            <img src="../assets/Logos/insmontsia.png" class="img-fluid" alt="..." />
+            <img src="../assets/img/logos/insmontsia.png" class="img-fluid" alt="..." />
           </div>
           <div class="col-xxl-2 col-lg-3 col-md-3 my-md-4 col-sm-6 col-12 my-sm-3 my-4 text-center">
-            <img src="../assets/Logos/logitech.png" class="img-fluid" alt="..." />
+            <img src="../assets/img/logos/logitech.png" class="img-fluid" alt="..." />
           
           </div>
           </div>
