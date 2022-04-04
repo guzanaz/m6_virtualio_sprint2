@@ -27,7 +27,7 @@
               User Name 
             </template>
             <b-dropdown-item href="#">El meu perfil</b-dropdown-item>
-            <b-dropdown-item href="#">Sortir</b-dropdown-item>
+            <b-dropdown-item @click.prevent="logout">Sortir</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
@@ -36,25 +36,24 @@
 </template>
 
 <script>
+import User from '../apis/User.js';
 export default {
   name: "UserNavbarSprint3",
+
   data() {
     return {
-      variant: "dark",
-      variants: [
-        "transparent",
-        "white",
-        "light",
-        "dark",
-        "primary",
-        "secondary",
-        "success",
-        "danger",
-        "warning",
-        "info",
-      ],
+
     };
   },
+  methods:{
+    //logout
+    logout() {
+      User.logout().then(() => {
+        localStorage.removeItem("auth");
+        this.$router.push({name:"home"});
+      })
+    }
+  }
 };
 </script>
 
