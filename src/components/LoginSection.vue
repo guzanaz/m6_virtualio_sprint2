@@ -174,8 +174,10 @@ export default {
   },
   methods: {
     login() {
+      console.log("LOGIN");
       User.login(this.form)
       .then(() => {
+        //localStorage.setItem("token",)
         localStorage.setItem("auth", "true");
         this.$router.push({name:"dashboard"});
       })

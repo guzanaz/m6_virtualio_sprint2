@@ -203,17 +203,9 @@ export default {
   name: "CreateVM",
   components: {
   },
- mounted() {
-    //API Call
-   User.auth().then(response=>{
-     //pushing data
-      this.user = response.data;
-    })
-   
-  },
 data() {
     return {
-      user: this.user,
+      user: '',
       value: 0,
       modalShow: false,
       form: {
@@ -228,6 +220,14 @@ data() {
       Version: [{ text: "Definir", value: null }, "1", "2", "3"],
       show: true,
     };
+  },
+  mounted() {
+    //API Call
+   User.auth().then(response =>{
+     //pushing data
+      this.user = response.data;
+    })  
+    this.store.commit('SET_USER',this.user);
   },
   methods: {
     //1. modal methods

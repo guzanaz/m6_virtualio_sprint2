@@ -1,40 +1,34 @@
-
-
 import Api from "../apis/Api";
-import { Store } from 'vuex';
 
-
-export function createStore() {
-    return new Store({
-        state: {
-            authenticated:false,
-            user: {
-                id: null,
-                email:'',
-                username: '',
-            },      
+export default {
+    namespaced: true,
+    state: {
+        authenticated: false,
+        user: {}
+    },
+    getters: {
+        authenticated(state) {
+            return state.authenticated
         },
-        getters:{
-            isAuthenticated(state){
-                return !!state.user.id;
-            }
+        user(state) {
+            return state.user
+        }
+    },
+    mutations: {
+        SET_AUTHENTICATED(state, value) {
+            state.authenticated = value
         },
-        mutations:{
-            CURRENT_USER_FETCHED(state, user) {
-                state.user.id = user.id;
-                state.user.email = user.email;
-                state.user.username = user.username;
+        SET_USER(state, value) {
+            state.user = value
+        }
+    },
+    actions: {
+        async initialLoad(context) {
+            if (localStorage.bgtrackerjwt) {
+                Api.defaults.headers.common.Authorization = 'Bearer ${localStorage.bjtrackerjwt}';
+                const res = await Api.get("/auth/currentUser");
+                context.commit("CURRENT_USER_FETCHED", res.data.user);
             }
-        },
-        actions:{
-            async initialLoad(context){
-                if (localStorage.bgtrackerjwt){
-                    Api.defaults.headers.common.Authorization = 'Bearer ${localStorage.bjtrackerjwt}';
-                    const res = await Api.get("auth/currentUser");
-                    context.commit("CURRENT_USER_FETCHED", res.data.user);
-                }
-            }
-        }  
-    });
+        }
+    }
 }
-

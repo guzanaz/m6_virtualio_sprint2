@@ -4,7 +4,10 @@ import Csrf from "./Csrf";
 export default {
     async login(form){
         await Csrf.getCookie();
-        return Api.post("/login", form);
+        var response = await Api.post("/login", form);
+        console.log(response.data.data.token);
+        localStorage.setItem("token", response.data.data.token);
+        return response;
     },
 
     async logout(){
@@ -13,6 +16,7 @@ export default {
     }, 
 
     auth(){
+        Api.defaults.headers.common.Authorization = 'Bearer '+localStorage.token;
         return Api.get("/user");
     }
 }

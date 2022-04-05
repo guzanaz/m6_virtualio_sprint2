@@ -7,7 +7,7 @@ import App from './App.vue';
 
 import VueRouter from 'vue-router';
 import { createRouter } from './router';
-import { createStore } from './store/auth';
+import { createStore } from './store';
 //Import v-form
 import {
   Button,
@@ -31,11 +31,12 @@ Vue.use(IconsPlugin);
 
 
 Vue.config.productionTip = false
-
-const router = createRouter();
-const store = createStore();
 new Vue({
   router,
   store,
   render: h => h(App),
 }).$mount('#app')
+
+const router = createRouter();
+const store = createStore();
+
