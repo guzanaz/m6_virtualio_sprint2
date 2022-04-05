@@ -7,8 +7,8 @@ import App from './App.vue';
 
 import VueRouter from 'vue-router';
 import { createRouter } from './router';
-import { createStore } from './store';
-//Import v-from
+import { createStore } from './store/auth';
+//Import v-form
 import {
   Button,
   HasError,

@@ -1,12 +1,13 @@
 
 
-import Vue from 'vue';
+import Api from "../apis/Api";
 import { Store } from 'vuex';
 
 
 export function createStore() {
     return new Store({
         state: {
+            authenticated:false,
             user: {
                 id: null,
                 email:'',
@@ -28,11 +29,12 @@ export function createStore() {
         actions:{
             async initialLoad(context){
                 if (localStorage.bgtrackerjwt){
-                    Vue.axios.defaults.headers.common.Authorization = 'Bearer ${localStorage.bjtrackerjwt}';
-                    const res = await Vue.axios.get("api/auth/currentUser");
+                    Api.defaults.headers.common.Authorization = 'Bearer ${localStorage.bjtrackerjwt}';
+                    const res = await Api.get("auth/currentUser");
                     context.commit("CURRENT_USER_FETCHED", res.data.user);
                 }
             }
         }  
     });
 }
+

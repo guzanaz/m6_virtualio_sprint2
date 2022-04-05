@@ -1,14 +1,17 @@
 <template>
   <section id="CreateVM">
     <!-- debe estar config para que se  muestre sólo sí se crea una mv-->
+    <!-- v-if="user" 
+    {{user.name}}
+    {{user.email}}-->
     <b-card 
-    v-if="user"
+    
     bg-variant="white" 
     text-variant="dark" 
     class="border-0 shadow my-5">
-      <h3>¡Bienvenid@ {{user.name}}!</h3>
+      <h3>¡Bienvenid@ !</h3>
       <b-card-text>
-        te has logueado desde {{user.email}}
+        te has logueado desde 
       </b-card-text>
       <b-button href="#" @click="showModal" variant="primary" class="ml-0">
         Crear Máquina Virtual
