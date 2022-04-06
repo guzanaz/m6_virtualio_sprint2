@@ -226,8 +226,9 @@ data() {
    User.auth().then(response =>{
      //pushing data
       this.user = response.data;
+      console.log(response.data);
+      console.log(this.$store);
     })  
-    this.store.commit('SET_USER',this.user);
   },
   methods: {
     //1. modal methods

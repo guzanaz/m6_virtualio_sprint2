@@ -31,12 +31,13 @@ Vue.use(IconsPlugin);
 
 
 Vue.config.productionTip = false
+const router = createRouter();
+const store = createStore();
 new Vue({
   router,
   store,
   render: h => h(App),
 }).$mount('#app')
 
-const router = createRouter();
-const store = createStore();
+
 

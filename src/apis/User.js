@@ -5,7 +5,6 @@ export default {
     async login(form){
         await Csrf.getCookie();
         var response = await Api.post("/login", form);
-        console.log(response.data.data.token);
         localStorage.setItem("token", response.data.data.token);
         return response;
     },
