@@ -83,16 +83,19 @@
 
 <script>
 import axios from "axios";
+import Vm from"../apis/Vm";
 export default {
   mounted() {
-    //API Call
-    axios.get("http://127.0.0.1:8000/api/VirtualMachine").then((res) => {
-      //pushing data to items that will show inside table
-      this.items = res.data;
-    });
+     //API Call
+   Vm.getAll().then(response =>{
+     //pushing data
+      this.Vm = response.data;
+      console.log(response.data);
+    })
   },
   data: () => ({
     return: {
+      Vm: '',
       modalShow: false,
       types: [
         "text",
@@ -249,18 +252,6 @@ export default {
           this.$router.push({ name: "dashboard" });
         });
     },
-
-    /** 
-     * updatePost() {
-                this.axios
-                    .patch(`http://127.0.0.1:8000/api/posts/${this.$route.params.postId}`, this.post)
-                    .then((res) => {
-                        this.$router.push({ name: 'PostIndex' });
-                    });
-            }
-     * 
-    */
-
     deleteItem(id) {
       axios
         .delete("http://127.0.0.1:8000/api/VirtualMachine/" + id)
