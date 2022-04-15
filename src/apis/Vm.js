@@ -6,7 +6,7 @@ export default {
      async getAll(){
         let csrf = await Csrf.getCookie();
         Api.defaults.headers.common.Authorization = 'Bearer '+ localStorage.token;
-        localStorage.setItem("csrf", csrf );
+        localStorage.setItem("csrfToken", csrf );
         return Api.get("/VirtualMachine");
     }
 }
