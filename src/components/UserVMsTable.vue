@@ -82,7 +82,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import Vm from"../apis/Vm";
 export default {
   mounted() {
@@ -110,86 +109,83 @@ export default {
         "range",
         "color",
       ],
-
-      //   form: {
-      //     Name: "",
-      //     OS: null,
-      //     Version: "",
-      //     Ram_size: null,
-      //     Disk_capacity: null,
-      //     Description: "",
-      //   },
-      //   options: [
-      //     { text: "Selecciona un SO", value: null },
-      //     { text: "Linux", value: "Linux" },
-      //     { text: "MacOS", value: "MacOS" },
-      //     { text: "Windows", value: "Windows" },
-      //   ],
       show: true,
     },
-    items: "",
+    items: "[ ]",
     fields: [
       {
-        key: "user_id",
-        label: "User ID",
-        sortable: false,
-      },
-      {
-        key: "Name",
-        label: "Nom",
+        key: "vmid",
+        label: "ID",
         sortable: true,
       },
       {
-        key: "OS",
-        label: "SO",
-        sortable: false,
-      },
-      {
-        key: "Version",
-        label: "Versió",
-        sortable: false,
-      },
-      {
-        key: "Ram_size",
-        label: "Mida Ram",
-        sortable: false,
-      },
-      {
-        key: "Disk_capacity",
-        label: "Mida Disc dur",
-        sortable: false,
-      },
-      {
-        key: "Description",
-        label: "Descripció",
-        sortable: false,
-      },
-      {
-        key: "created_at",
-        label: "Data creació",
+        key: "netout",
+        label: "netout",
         sortable: true,
       },
       {
-        key: "updated_at",
-        label: "Data actualització",
-        sortable: true,
-      },
-      {
-        key: "Power_on",
-        label: "Encès",
+        key: "uptime",
+        label: "uptime",
         sortable: false,
       },
       {
-        key: "edit",
-        label: "Editar",
+        key: "disk",
+        label: "disk",
+        sortable: false,
       },
       {
-        key: "delete",
-        label: "Esborrar",
+        key: "qmpstatus",
+        label: "qmpstatus",
+        sortable: false,
       },
       {
-        key: "share",
-        label: "Compartir",
+        key: "status",
+        label: "status",
+        sortable: false,
+      },
+      {
+        key: "diskwrite",
+        label: "diskwrite",
+        sortable: false,
+      },
+      {
+        key: "maxdisk",
+        label: "maxdisk",
+        sortable: true,
+      },
+      {
+        key: "netin",
+        label: "netin",
+        sortable: true,
+      },
+      {
+        key: "diskread",
+        label: "diskread",
+        sortable: false,
+      },
+      {
+        key: "ha",
+        label: "ha",
+      },
+      {
+        key: "cpu",
+        label: "cpu",
+      },
+      {
+        key: "cpus",
+        label: "cpus",
+      },
+      {
+        key: "maxmem",
+        label: "maxmem",
+      },
+      {
+        key: "mem",
+        label: "mem",
+      },
+      {
+        key: "name",
+        label: "name",
       },
     ],
     filter: "",
@@ -234,32 +230,6 @@ export default {
       this.$nextTick(() => {
         this.$bvModal.hide("modal-prevent-closing");
       });
-    },
-    EditItem(id) {
-      axios
-        .get("http://127.0.0.1:8000/api/VirtualMachine/" + id)
-        .then((res) => {
-          console.log(res);
-          this.post = res.data;
-        });
-    },
-
-    UpdateItem(id) {
-      axios
-        .put("http://127.0.0.1:8000/api/VirtualMachine/" + id, this.item)
-        .then((res) => {
-          console.log(res);
-          this.$router.push({ name: "dashboard" });
-        });
-    },
-    deleteItem(id) {
-      axios
-        .delete("http://127.0.0.1:8000/api/VirtualMachine/" + id)
-        .then((res) => {
-          console.log(res);
-          const index = this.items.map((data) => data.id).indexOf(id);
-          this.items.splice(index, 1);
-        });
     },
   },
 };
