@@ -1,10 +1,10 @@
 <template>
-  <b-navbar fluid toggleable="lg" type="light" variant="light" class="m-0">
+  <b-navbar fluid toggleable="md" type="light" variant="light" class="m-0">
     <b-container>
-      <b-navbar-brand href="#">
+      <b-navbar-brand href="/home">
         <img
           src="https://wiki.ead.pucv.cl/images/b/b2/Virtualio_logo.svg"
-          alt=""
+          alt="Virtualio logo"
           width="162"
           height="43.31"
         />
@@ -24,7 +24,7 @@
                 size="36px"
               >
               </b-avatar>
-              User Name 
+              {{user.name}} {{user.lastname}}
             </template>
             <b-dropdown-item href="#">El meu perfil</b-dropdown-item>
             <b-dropdown-item @click.prevent="logout">Sortir</b-dropdown-item>
@@ -37,13 +37,24 @@
 
 <script>
 import User from '../apis/User.js';
+
 export default {
   name: "UserNavbarSprint3",
 
   data() {
     return {
-
+      user:'',
     };
+  },
+   mounted() {
+    //API Call
+   User.auth().then(response =>{
+     //pushing data
+      this.user = response.data;
+      console.log(response.data);
+      console.log(this.$store);
+      this.$store.commit('auth/SET_USER', this.user);
+    })  
   },
   methods:{
     //logout
