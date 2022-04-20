@@ -18,7 +18,7 @@
             responsive
             outlined
             striped
-            :items="items"
+            :items="Vm"
             :filter="filter"
             :per-page="perPage"
             :current-page="currentPage"
@@ -88,10 +88,9 @@ export default {
   },
   data: () => ({
     return: {
-      Vm: [],
       show: true,
     },
-    items: [],
+    Vm: [],
     fields: [
       {
         key: "vmid",
@@ -193,7 +192,7 @@ export default {
     },
 
     rows() {
-      return this.items.length;
+      return this.Vm.length;
     },
   },
   methods: {
