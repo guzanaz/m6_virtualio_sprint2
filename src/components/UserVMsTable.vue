@@ -22,7 +22,6 @@
             :filter="filter"
             :per-page="perPage"
             :current-page="currentPage"
-            :fields="fields"
           >
             <template v-slot:cell(edit)="">
               <b-button id="show-btn" @click="showModal" variant="dark">
@@ -91,82 +90,6 @@ export default {
       show: true,
     },
     Vm: [],
-    fields: [
-      {
-        key: "vmid",
-        label: "ID",
-        sortable: true,
-      },
-      {
-        key: "netout",
-        label: "netout",
-        sortable: true,
-      },
-      {
-        key: "uptime",
-        label: "uptime",
-        sortable: false,
-      },
-      {
-        key: "disk",
-        label: "disk",
-        sortable: false,
-      },
-      {
-        key: "qmpstatus",
-        label: "qmpstatus",
-        sortable: false,
-      },
-      {
-        key: "status",
-        label: "status",
-        sortable: false,
-      },
-      {
-        key: "diskwrite",
-        label: "diskwrite",
-        sortable: false,
-      },
-      {
-        key: "maxdisk",
-        label: "maxdisk",
-        sortable: true,
-      },
-      {
-        key: "netin",
-        label: "netin",
-        sortable: true,
-      },
-      {
-        key: "diskread",
-        label: "diskread",
-        sortable: false,
-      },
-      {
-        key: "ha",
-        label: "ha",
-      },
-      {
-        key: "cpu",
-        label: "cpu",
-      },
-      {
-        key: "cpus",
-        label: "cpus",
-      },
-      {
-        key: "maxmem",
-        label: "maxmem",
-      },
-      {
-        key: "mem",
-        label: "mem",
-      },
-      {
-        key: "name",
-        label: "name",
-      },
-    ],
     filter: "",
     perPage: 6,
     currentPage: 1,

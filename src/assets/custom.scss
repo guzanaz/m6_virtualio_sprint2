@@ -1,19 +1,34 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;900&display=swap');
 $font-family-sans-serif:      "Inter", Roboto, sans-serif !default;
 $font-family-base:            $font-family-sans-serif !default;
-// Your variable overrides
+
 $theme-colors: (
   "primary": #FF8364,
+  "danger": #ff4136
 );
 
-.btn-primary {
-  
-  color: #fff;
-  
-  }
+#app {
+  font-family: $font-family-base !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
+  a {
+    font-size: .98em;
+}
+
+.btn-primary {
+  color: #ffffff;
+}
+
+
+
+}
+
+// Import Bootstrap and BootstrapVue source SCSS files
 @import "/../m6_virtualio_sprint2/node_modules/bootstrap/scss/bootstrap.scss";
 @import "/../m6_virtualio_sprint2/node_modules/bootstrap-vue/src/index.scss";
+
+
 
 
 
