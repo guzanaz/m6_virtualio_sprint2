@@ -80,19 +80,18 @@ export default {
   mounted() {
     //API Call
     Vm.getAll().then((response) => {
-      //pushing data
-      this.Vm = response.data;
-      console.log(response.data);
+      //pushing data to  that will show inside table
+      this.Vm = response.data.data;
+      console.log(response.data.data);
     });
   },
   data: () => ({
-    return: {
-      show: true,
-    },
+    show:true,
     Vm: [],
     filter: "",
     perPage: 6,
     currentPage: 1,
+    
   }),
   modalShow: false,
       types: [
