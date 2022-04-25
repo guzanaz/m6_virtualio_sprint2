@@ -19,9 +19,7 @@ export default {
 </script>
 
 <style lang="scss" src="./assets/custom.scss">
-a {
-    font-size: .98em;
-}
+
 
 
 </style>
