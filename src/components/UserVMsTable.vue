@@ -22,6 +22,7 @@
             :filter="filter"
             :per-page="perPage"
             :current-page="currentPage"
+            :fields="fields"
           >
             <template v-slot:cell(edit)="">
               <b-button id="show-btn" @click="showModal" variant="dark">
@@ -88,6 +89,12 @@ export default {
   data: () => ({
     show:true,
     Vm: [],
+    fields: [
+        { key: 'name', label: 'NAME', sortable: true },
+        { key: 'status', label: 'STATUS', sortable: true },
+        { key: 'maxdisk', label: 'Capacitat HD'},
+        { key: 'maxmem', label: 'RAM', sortable: true },
+      ],
     filter: "",
     perPage: 6,
     currentPage: 1,
