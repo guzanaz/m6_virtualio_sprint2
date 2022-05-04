@@ -5,33 +5,37 @@
         <div class="col-lg-9 col-xxl-5 py-3 position-relative">
           <div class="card overflow-hidden z-index-1">
             <div class="card-body p-0">
-              <div class="row g-0 h-100">
-                <div class="col-md-5 text-center bg-secondary bg-gradient">
-                  <div class="position-relative p-4 pt-md-5 pb-md-4 light">
-                    <!--/.bg-holder-->
-                    <div class="z-index-1 position-relative">
-                      <a
-                        class="
-                          text-light
-                          mb-4
-                          font-sans-serif
-                          fs-4
-                          d-inline-block
-                          fw-bolder
-                        "
-                        href="#"
-                        >Virtualio</a
-                      >
-                      <p class="opacity-75 text-white">
-                        Benvingut/benvinguda! <br />Aquí podràs crear i
-                        manipular màquines virtuals per acompanyar-te en el teu
-                        procés d'aprenentatge, tant si ets alumne/a de SMX o
-                        ASIX.
-                      </p>
-                    </div>
+              <div class="row mx-0">
+                <div class="col text-center bg-secondary pt-5">
+                  <!--/.bg-holder-->
+                  <div class="z-index-1 position-relative mb-5">
+                    <a
+                      class="
+                        text-light
+                        mt-3
+                        mb-4
+                        font-sans-serif
+                        fs-4
+                        d-inline-block
+                        fw-bolder
+                      "
+                      href="#"
+                    >
+                      <img
+                        src="https://wiki.ead.pucv.cl/images/d/dd/Virtualio.svg"
+                        alt=""
+                        width="200"
+                        height="auto"
+                    /></a>
+                    
+                    <p class="opacity-75 text-white mt-3">
+                      Benvingut/benvinguda! <br />Aquí podràs crear i manipular
+                      màquines virtuals per acompanyar-te en el teu procés
+                      d'aprenentatge, tant si ets alumne/a de SMX, DAW o ASIX.
+                    </p>
                   </div>
-    
-                  <div class="mt-3 mb-4 mt-md-4 mb-md-5 light">
+
+                  <div class="pt-4 light">
                     <p
                       class="
                         mb-0
@@ -53,7 +57,7 @@
                 <div class="col-md-7 d-flex flex-center">
                   <div class="p-4 p-md-5 flex-grow-1">
                     <div class="row flex-between-center">
-                      <div class="col-auto mb-4 ">
+                      <div class="col-auto mb-4">
                         <h3>Inicia la teva sessió</h3>
                       </div>
                     </div>
@@ -91,21 +95,20 @@
                         </span>
                       </div>
                       <div class="row flex-between-center mb-3">
-                        <div class="col-auto align-self-center">
-                          <div class="form-check mb-0">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              id="card-checkbox"
-                              checked="checked"
-                            /><label
-                              class="form-check-label mb-0"
+                        <div class="col-auto align-self-center pr-2">
+                          <div class="form-check mb-0 pl-0">
+                            <label class="custom-checkbox mr-1 mb-0">
+                              <input type="checkbox" checked="checked" />
+                              <span class="checkmark"></span>
+                            </label>
+                            <label
+                              class="form-check-label mb-0 pl-0"
                               for="card-checkbox"
                               >Recorda’m</label
                             >
                           </div>
                         </div>
-                        <div class="col align-self-end text-end">
+                        <div class="col align-self-end pr-0 pl-1 text-end">
                           <a
                             class="fs--1"
                             href="../../../pages/authentication/card/forgot-password.html"
@@ -118,7 +121,8 @@
                           class="btn btn-primary ml-0 w-100 mt-3"
                           type="submit"
                           @click.prevent="login"
-                          name="submit">
+                          name="submit"
+                        >
                           Log In
                         </button>
                       </div>
@@ -160,7 +164,6 @@
 <script>
 import User from "../apis/User";
 
-
 export default {
   name: "LoginSection",
   data() {
@@ -169,28 +172,51 @@ export default {
         email: "",
         password: "",
       },
-      errors: []
+      errors: [],
     };
   },
   methods: {
     login() {
       console.log("LOGIN");
       User.login(this.form)
-      .then(() => {
-        //localStorage.setItem("token",)
-        localStorage.setItem("auth", "true");
-        this.$router.push({name:"dashboard"});
-      })
-      .catch((error) => {
-        if (error.response.status === 422) {
-          this.errors = error.response.data.errors;
-        }
-      });
+        .then(() => {
+          //localStorage.setItem("token",)
+          localStorage.setItem("auth", "true");
+          this.$router.push({ name: "dashboard" });
+        })
+        .catch((error) => {
+          if (error.response.status === 422) {
+            this.errors = error.response.data.errors;
+          }
+        });
     },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss">
+.custom-checkbox {
+  vertical-align: text-bottom;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+
+  .checkmark {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 2px;
+    display: inline-block;
+    background: url(https://svgshare.com/getbyhash/sha1-dIMOA96K0XO+S6WMp7k9ekrntuM=)
+      center/3250% no-repeat;
+  }
+  input:checked + .checkmark {
+    background-size: 60%;
+    background-color: #ff8364;
+  }
+  input {
+    display: none;
+  }
+}
 </style>

@@ -6,7 +6,7 @@
           src="https://wiki.ead.pucv.cl/images/b/b2/Virtualio_logo.svg"
           alt=""
           width="162"
-          height="43.31"
+          height="auto"
         />
       </a>
       <button

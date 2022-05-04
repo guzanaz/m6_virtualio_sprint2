@@ -8,5 +8,14 @@ export default {
         Api.defaults.headers.common.Authorization = 'Bearer '+ localStorage.token;
         localStorage.setItem("csrfToken", csrf );
         return Api.get("/VirtualMachine");
-    }
+    },
+
+    async store(){
+        return Api.post("/VirtualMachine");
+     },
+
+    //  async edit(){
+    //     return Api.post("/VirtualMachine/id");
+    //  }
+
 }

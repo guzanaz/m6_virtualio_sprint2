@@ -1,15 +1,14 @@
 <template>
   <section id="CreateVM">
     <!-- debe estar config para que se  muestre sólo sí se crea una mv-->
-    <b-card 
-    v-if="user" 
-    bg-variant="white" 
-    text-variant="dark" 
-    class="border-0 shadow my-5">
-      <h3>¡Bienvenid@ {{user.name}}!</h3>
-      <b-card-text>
-        te has logueado desde {{user.email}}
-      </b-card-text>
+    <b-card
+      v-if="user"
+      bg-variant="white"
+      text-variant="dark"
+      class="border-0 shadow my-5"
+    >
+      <h3>¡Bienvenid@ {{ user.name }}!</h3>
+      <b-card-text> te has logueado desde {{ user.email }} </b-card-text>
       <b-button href="#" @click="showModal" variant="primary" class="ml-0">
         Crear Máquina Virtual
       </b-button>
@@ -135,7 +134,7 @@
               >
                 <h5>Mida de les memòries</h5>
                 <p class="font-weight-light">
-                  Fixa la mida de la RAM en Megabytes (MB) per a la teva màquina
+                  Fixa la mida de la RAM en Gigabytes (GB) per a la teva màquina
                   y assigna la mida de disc dur virtual.
                 </p>
               </b-row>
@@ -153,7 +152,7 @@
               <b-form @submit="onSubmit" @reset="onReset" v-if="show">
                 <div class="pt-5">
                   <label for="ram_size"
-                    >RAM ({{ form.RamSize }} Megabytes)</label
+                    >RAM ({{ form.RamSize }} Gigabytes)</label
                   >
                   <b-form-input
                     id="ram_size"
@@ -196,13 +195,13 @@
 
 <script>
 import User from "../apis/User";
+import Vm from "../apis/Vm";
 export default {
   name: "CreateVM",
-  components: {
-  },
-data() {
+  components: {},
+  data() {
     return {
-      user: '',
+      user: "",
       value: 0,
       modalShow: false,
       form: {
@@ -210,23 +209,23 @@ data() {
         OS: null,
         Version: null,
         RamSize: 0,
-        DiskCapacity:0,
+        DiskCapacity: 0,
       },
-      OS: [{ text: "Definir", value: null }, "Linux", "Mac OS", "Windows"],
+      OS: [{ text: "Definir", value: null }, "ubuntu"],
 
-      Version: [{ text: "Definir", value: null }, "1", "2", "3"],
+      Version: [{ text: "Definir", value: null }, "22.04"],
       show: true,
     };
   },
   mounted() {
     //API Call
-   User.auth().then(response =>{
-     //pushing data
+    User.auth().then((response) => {
+      //pushing data
       this.user = response.data;
       console.log(response.data);
       console.log(this.$store);
-      this.$store.commit('auth/SET_USER', this.user);
-    })  
+      this.$store.commit("auth/SET_USER", this.user);
+    });
   },
   methods: {
     //1. modal methods
@@ -263,7 +262,31 @@ data() {
     //2. form methods
     onSubmit(event) {
       event.preventDefault();
-      alert(JSON.stringify(this.form));
+      var vm = {
+        name: this.form.name,
+        ide2:
+          "local:iso/" +
+          this.form.OS +
+          "-" +
+          this.form.Version +
+          "-desktop-amd64.iso,media=cdrom",
+        ostype: "l26",
+        scsihw: "virtio-scsi-pci",
+        sockets: 2,
+        sata0: "local-lvm:" + this.form.DiskCapacity,
+        cores: 2,
+        memory: this.form.RamSize * 1000,
+        net0: "virtio,bridge=vmbr0,firewall=1",
+      };
+
+      Vm.store().then((response) => {
+        this.vm = response.data;
+        console.log(response.data);
+        console.log(this.$store);
+        this.$store.commit(this.vm);
+      });
+
+      alert(JSON.stringify(vm));
     },
     onReset(event) {
       event.preventDefault();
@@ -271,8 +294,8 @@ data() {
       this.form.name = "";
       this.form.OS = null;
       this.form.Version = null;
-      this.form.RamSize =0;
-      this.form.DiskCapacity=0;
+      this.form.RamSize = 0;
+      this.form.DiskCapacity = 0;
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {
@@ -286,6 +309,12 @@ data() {
 <style scoped>
 .modal-body {
   padding: 0;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #ff8364;
+  border-color: #ff8364;
 }
 </style>
 

@@ -1,11 +1,15 @@
 <template>
   <section id="googlemap">
-    <div class="container-fluid g-0">
+    <div class="container-fluid">
       <!--Google map-->
       <div
         id="map-container-google-1"
         class="z-depth-1-half map-container"
-        style="height: 360px"
+        style="height: 360px; border:0;" 
+        frameborder="0"
+        allowfullscreen="" 
+        aria-hidden="false" 
+        tabindex="0"
       >
         <iframe
           title="googlemaps"
@@ -25,3 +29,6 @@ export default {
 };
 </script>
 
+<style scoped>
+
+</style>
