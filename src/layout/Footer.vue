@@ -15,9 +15,9 @@
           >
             <img
               src="https://wiki.ead.pucv.cl/images/b/b2/Virtualio_logo.svg"
-              alt=""
-              width="162"
-              height="43.31"
+              alt="virtualio"
+              width="160px"
+              height="auto"
             />
           </a>
 
@@ -28,13 +28,13 @@
           </ul>
           <ul class="list-unstyled">
             <li class="d-inline">
-              <a class="link-secondary text-decoration-none me-3" href="#"
+              <a class="link-secondary text-decoration-none mr-3" href="#"
                 >Home</a
               >
             </li>
             <li class="d-inline">
               <a
-                class="link-secondary text-decoration-none me-3"
+                class="link-secondary text-decoration-none mr-3"
                 href="#SobreVirtualio"
                 >Sobre Virtualio</a
               >

@@ -3,12 +3,12 @@
     <div class="container my-5">
       <div class="row min-vh-0 d-flex justify-content-center g-0">
         <div class="col-lg-9 col-xxl-5 py-3 position-relative">
-          <div class="card overflow-hidden z-index-1">
+          <div class="card shadow z-index-1">
             <div class="card-body p-0">
               <div class="row mx-0">
                 <div class="col text-center bg-secondary pt-5">
                   <!--/.bg-holder-->
-                  <div class="z-index-1 position-relative mb-5">
+                  <div class="z-index-1 position-relative mb-md-5">
                     <a
                       class="
                         text-light
@@ -35,10 +35,10 @@
                     </p>
                   </div>
 
-                  <div class="pt-4 light">
+                  <div class="pt-4 pb-5 light">
                     <p
                       class="
-                        mb-0
+                        mb-md-0
                         mt-4 mt-md-5
                         fs--1
                         fw-semi-bold
@@ -48,7 +48,7 @@
                     >
                       <strong> No tens un compte? </strong>
                       <br />
-                      <a class="text-decoration-underline text-white" href="#!"
+                      <a class="text-decoration-underline text-white" href="#contacte"
                         >Contacta’ns!</a
                       >
                     </p>

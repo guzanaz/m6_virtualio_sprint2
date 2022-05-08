@@ -107,10 +107,10 @@
     <b-modal
       body-class="p-0"
       id="modal-vm-capacity"
+      ref="modal-vm-capacity"
       no-stacking
       hide-header
       hide-footer
-      title="Editant capacitat de la màquina Virtual"
       size="lg"
       @show="resetModal"
       @hidden="resetModal"
@@ -180,7 +180,7 @@
                   <b-button @click="showModal" variant="outline-secondary"
                     >Enrere</b-button
                   >
-                  <b-button type="submit" class="px-4" variant="primary"
+                  <b-button @click="hideModal" type="submit" class="px-4" variant="primary"
                     >Crear</b-button
                   >
                 </b-row>
@@ -199,6 +199,9 @@ import Vm from "../apis/Vm";
 export default {
   name: "CreateVM",
   components: {},
+  props:{
+    hola:Function
+  },
   data() {
     return {
       user: "",
@@ -218,6 +221,8 @@ export default {
     };
   },
   mounted() {
+
+    
     //API Call
     User.auth().then((response) => {
       //pushing data
@@ -233,7 +238,7 @@ export default {
       this.$refs["modal"].show();
     },
     hideModal() {
-      this.$refs["modal"].hide();
+      this.$refs["modal-vm-capacity"].hide();
     },
 
     resetModal() {
@@ -260,7 +265,7 @@ export default {
     },
 
     //2. form methods
-    onSubmit(event) {
+    async onSubmit (event) {
       event.preventDefault();
       var vm = {
         name: this.form.name,
@@ -275,18 +280,17 @@ export default {
         sockets: 2,
         sata0: "local-lvm:" + this.form.DiskCapacity,
         cores: 2,
-        memory: this.form.RamSize * 1000,
+        memory: this.form.RamSize * 1024,
         net0: "virtio,bridge=vmbr0,firewall=1",
       };
-
-      Vm.store().then((response) => {
-        this.vm = response.data;
-        console.log(response.data);
-        console.log(this.$store);
-        this.$store.commit(this.vm);
+      //método store
+      await Vm.store(vm).then((response)=>{
+      this.Vm = response.data.data;
+      console.log(response.data.data);
       });
+      this.hola();
 
-      alert(JSON.stringify(vm));
+      // alert(JSON.stringify(vm));
     },
     onReset(event) {
       event.preventDefault();

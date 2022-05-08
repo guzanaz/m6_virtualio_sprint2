@@ -18,49 +18,72 @@
             responsive
             outlined
             striped
+            :sort-by.sync="Vm"
             :items="Vm"
             :filter="filter"
             :per-page="perPage"
             :current-page="currentPage"
             :fields="fields"
           >
-            <template v-slot:cell(edit)="">
-              <b-button id="show-btn" @click="showModal" variant="dark">
-                <b-icon icon="gear-fill" aria-hidden="true"></b-icon>
-              </b-button>
-              <!-- modal pop up for editing virtual machine -->
-              <b-modal
-                ref="modal"
-                hide-header
-                hide-footer
-                title="Editant màquina Virtual"
-                size="lg"
-                @show="resetModal"
-                @hidden="resetModal"
-                @ok="handleOk"
+            <template  v-slot:cell(actions)="">
+              <b-button
+                variant="outline-primary"
+                class="mr-1"
+                pill
+                @click="runVm(data.item.id)"
               >
-                <!-- grupo para editar nombre de la máquina virtual -->
-                <b-container fluid="sm">
-                  <b-row>
-                    <b-col cols="4"> </b-col>
-                    <b-col cols="8">
-                      <b-container fluid>
-                        <b-row class="my-1" v-for="type in types" :key="type">
-                          <label :for="`type-${type}`">Type {{ type }}:</label>
-                          <b-form-input
-                            :id="`type-${type}`"
-                            :type="type"
-                          ></b-form-input>
-                        </b-row>
-                      </b-container>
-                    </b-col>
-                  </b-row>
-                </b-container>
-              </b-modal>
-            </template>
-            <template v-slot:cell(delete)="data">
-              <b-button variant="danger" @click="deleteItem(data.item.id)">
-                <b-icon icon="trash-fill" aria-hidden="true"></b-icon>
+                <b-icon
+                  style="vertical-align: unset"
+                  width="13px"
+                  height="auto"
+                  icon="play-fill"
+                  aria-hidden="true"
+                ></b-icon>
+              </b-button>
+
+              <b-button
+                variant="outline-secondary"
+                class="mr-1"
+                pill
+                @click="showModal"
+              >
+                <b-icon
+                  style="vertical-align: unset"
+                  width="12px"
+                  height="auto"
+                  icon="gear-fill"
+                  aria-hidden="true"
+                >
+                </b-icon>
+              </b-button>
+
+              <b-button
+                pill
+                variant="outline-dark"
+                class="mr-0"
+                @click="stopVm(data.item.id)"
+              >
+                <b-icon
+                  style="vertical-align: unset"
+                  width="12px"
+                  height="auto"
+                  icon="stop-fill"
+                  aria-hidden="true"
+                ></b-icon>
+              </b-button>
+              <b-button
+                pill
+                class="ml-1"
+                variant="outline-warning"
+                @click="deleteItem(data.item.id)"
+              >
+                <b-icon
+                  style="vertical-align: unset"
+                  width="12px"
+                  height="auto"
+                  icon="trash-fill"
+                  aria-hidden="true"
+                ></b-icon>
               </b-button>
             </template>
           </b-table>
@@ -72,48 +95,48 @@
         </b-col>
       </b-row>
     </b-card>
+    <!--<create-vm :showModal="showModal"></create-vm>-->
   </div>
 </template>
 
 <script>
+// import CreateVM from "../components/CreateVM.vue";
 import Vm from "../apis/Vm";
 export default {
+  components: {
+    // CreateVM,
+  },
   mounted() {
-    //API Call
-    Vm.getAll().then((response) => {
-      //pushing data to  that will show inside table
-      this.Vm = response.data.data;
-      console.log(response.data.data);
-    });
+    this.showVm();
   },
   data: () => ({
-    show:true,
+    show: true,
     Vm: [],
     fields: [
-        { key: 'name', label: 'NAME', sortable: true },
-        { key: 'status', label: 'STATUS', sortable: true },
-        { key: 'maxdisk', label: 'Capacitat HD'},
-        { key: 'maxmem', label: 'RAM', sortable: true },
-      ],
+      { key: "name", label: "NAME", sortable: true },
+      { key: "status", label: "STATUS", sortable: true },
+      { key: "maxdisk", label: "CAPACITAT HD" },
+      { key: "maxmem", label: "RAM", sortable: true },
+      { key: "actions", label: "ACCIONS" },
+    ],
     filter: "",
     perPage: 6,
     currentPage: 1,
-    
   }),
   modalShow: false,
-      types: [
-        "text",
-        "number",
-        "email",
-        "password",
-        "search",
-        "url",
-        "tel",
-        "date",
-        "time",
-        "range",
-        "color",
-      ],
+  types: [
+    "text",
+    "number",
+    "email",
+    "password",
+    "search",
+    "url",
+    "tel",
+    "date",
+    "time",
+    "range",
+    "color",
+  ],
   computed: {
     //validación nombre virtual Machine
     validateName() {
@@ -151,6 +174,16 @@ export default {
       // Hide the modal manually
       this.$nextTick(() => {
         this.$bvModal.hide("modal-prevent-closing");
+      });
+    },
+    showVm() {
+      console.log("hola desde dashboard");
+      //API Call
+      Vm.getAll().then((response) => {
+        //pushing data to  that will show inside table
+        this.Vm = response.data.data;
+        console.log(response.data.data);
+        this.hola();
       });
     },
   },

@@ -10,9 +10,9 @@ export default {
         return Api.get("/VirtualMachine");
     },
 
-    async store(){
-        return Api.post("/VirtualMachine");
-     },
+    async store(vm){
+        return Api.post("/VirtualMachine", vm);
+    },
 
     //  async edit(){
     //     return Api.post("/VirtualMachine/id");
