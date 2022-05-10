@@ -18,20 +18,21 @@
             responsive
             outlined
             striped
-            :sort-by.sync="Vm"
-            :items="Vm"
+            :sort-by.sync="items"
+            :items="items"
             :filter="filter"
             :per-page="perPage"
             :current-page="currentPage"
             :fields="fields"
           >
-            <template v-slot:cell(actions)="">
+            <template #cell(actions)="{ item }">
+              <!-- <template v-slot:cell(actions)="item" >-->
               <b-button
                 v-b-tooltip.hover.left="'Arrancar'"
                 variant="outline-primary"
                 class="mr-1 mb-1 mb-sm-1 mb-md-0"
                 pill
-                @click="runVm(data.item.id)"
+                @click="runVm(item)"
               >
                 <b-icon
                   style="vertical-align: unset"
@@ -64,7 +65,7 @@
                 pill
                 variant="outline-dark"
                 class="mr-1 mb-1 mb-sm-1 mb-lg-0"
-                @click="stopVm(data.item.id)"
+                @click="stopVm(item)"
               >
                 <b-icon
                   style="vertical-align: unset"
@@ -74,12 +75,13 @@
                   aria-hidden="true"
                 ></b-icon>
               </b-button>
+
               <b-button
                 v-b-tooltip.hover.right="'Esborrar'"
                 pill
                 class="ml-0"
                 variant="outline-warning"
-                @click="deleteItem(data.item.id)"
+                @click="deleteItem(item)"
               >
                 <b-icon
                   style="vertical-align: unset"
@@ -107,17 +109,16 @@
 // import CreateVM from "../components/CreateVM.vue";
 import Vm from "../apis/Vm";
 export default {
-  components: {
-    // CreateVM,
-  },
+  components: {},
   mounted() {
     this.showVm();
   },
   data: () => ({
     show: true,
-    Vm: [],
+    items: [],
     fields: [
       { key: "name", label: "NOM", sortable: true },
+      { key: "vmid", label: "VMID", sortable: true },
       { key: "status", label: "STATUS", sortable: true },
       { key: "maxdisk", label: "CAPACITAT HD" },
       { key: "maxmem", label: "RAM", sortable: true },
@@ -148,7 +149,7 @@ export default {
     },
 
     rows() {
-      return this.Vm.length;
+      return this.items.length;
     },
   },
   methods: {
@@ -185,9 +186,19 @@ export default {
       //API Call
       Vm.getAll().then((response) => {
         //pushing data to  that will show inside table
-        this.Vm = response.data.data;
+        this.items = response.data.data;
         console.log(response.data.data);
         this.hola();
+      });
+    },
+    async deleteItem(item) {
+      let id = item.vmid;
+      console.log(item.vmid);
+      await Vm.destroy(id).then((response) => {
+        console.log(response);
+        let index = this.items.findIndex((x) => x.vmid == id);
+        console.log(index);
+        this.items.splice(index, 1);
       });
     },
   },

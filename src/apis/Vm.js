@@ -14,8 +14,8 @@ export default {
         return Api.post("/VirtualMachine", vm);
     },
 
-    async destroy(vm){
-        return Api.delete("/VirtualMachine", vm);
+    async destroy(vmid){
+        return Api.delete("/VirtualMachine/" + vmid);
     },
     //  async edit(){
     //     return Api.post("/VirtualMachine/id");
