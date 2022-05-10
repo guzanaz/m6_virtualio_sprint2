@@ -25,10 +25,11 @@
             :current-page="currentPage"
             :fields="fields"
           >
-            <template  v-slot:cell(actions)="">
+            <template v-slot:cell(actions)="">
               <b-button
+                v-b-tooltip.hover.left="'Arrancar'"
                 variant="outline-primary"
-                class="mr-1"
+                class="mr-1 mb-1 mb-sm-1 mb-md-0"
                 pill
                 @click="runVm(data.item.id)"
               >
@@ -42,8 +43,9 @@
               </b-button>
 
               <b-button
+                v-b-tooltip.hover.top="'Editar'"
                 variant="outline-secondary"
-                class="mr-1"
+                class="mr-1 mb-1 mb-sm-1 mb-lg-0"
                 pill
                 @click="showModal"
               >
@@ -58,9 +60,10 @@
               </b-button>
 
               <b-button
+                v-b-tooltip.hover.top="'Parar'"
                 pill
                 variant="outline-dark"
-                class="mr-0"
+                class="mr-1 mb-1 mb-sm-1 mb-lg-0"
                 @click="stopVm(data.item.id)"
               >
                 <b-icon
@@ -72,8 +75,9 @@
                 ></b-icon>
               </b-button>
               <b-button
+                v-b-tooltip.hover.right="'Esborrar'"
                 pill
-                class="ml-1"
+                class="ml-0"
                 variant="outline-warning"
                 @click="deleteItem(data.item.id)"
               >
@@ -113,7 +117,7 @@ export default {
     show: true,
     Vm: [],
     fields: [
-      { key: "name", label: "NAME", sortable: true },
+      { key: "name", label: "NOM", sortable: true },
       { key: "status", label: "STATUS", sortable: true },
       { key: "maxdisk", label: "CAPACITAT HD" },
       { key: "maxmem", label: "RAM", sortable: true },
@@ -189,7 +193,7 @@ export default {
   },
 };
 </script>
-<style scooped>
+<style lang="scss" scooped>
 .table > thead {
   vertical-align: middle;
 }

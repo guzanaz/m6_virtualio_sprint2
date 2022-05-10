@@ -18,7 +18,23 @@ $theme-colors: ("primary": #FF8364,
 
   .btn-primary {
     color: #ffffff;
+    &:hover{
+      color: #ffffff;
+    }
   }
+
+  .btn-outline-primary{
+    &:hover{
+      color: #ffffff;
+    }
+  }
+  .btn-outline-warning{
+    &:hover{
+      color: #ffffff;
+    }
+  }
+
+  
 
 
 }
