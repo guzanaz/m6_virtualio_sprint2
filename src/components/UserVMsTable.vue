@@ -48,7 +48,7 @@
                 variant="outline-secondary"
                 class="mr-1 mb-1 mb-sm-1 mb-lg-0"
                 pill
-                @click="showModal"
+                @click="modalShow = !modalShow"
               >
                 <b-icon
                   style="vertical-align: unset"
@@ -59,6 +59,17 @@
                 >
                 </b-icon>
               </b-button>
+
+              <b-modal
+                body-class="p-0"
+                no-stacking
+                hide-header
+                hide-footer
+                title="Editant màquina Virtual"
+                size="lg"
+                v-model="modalShow"
+                >Hello From Modal!
+              </b-modal>
 
               <b-button
                 v-b-tooltip.hover.top="'Parar'"
@@ -101,20 +112,20 @@
         </b-col>
       </b-row>
     </b-card>
-   
   </div>
 </template>
 
 <script>
-
 import Vm from "../apis/Vm";
 export default {
+  name: "UserVMsTable",
   components: {},
   mounted() {
     this.showVm();
   },
   data: () => ({
-    sortBy: 'vmid',
+    modalShow: false,
+    sortBy: "vmid",
     sortDesc: true,
     show: true,
     items: [],
@@ -155,6 +166,9 @@ export default {
     },
   },
   methods: {
+    showModal() {
+      this.$refs["editVm"].show();
+    },
     async showVm() {
       console.log("hola desde dashboard");
       //API Call

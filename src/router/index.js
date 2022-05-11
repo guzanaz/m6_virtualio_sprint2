@@ -3,8 +3,6 @@ import Router from 'vue-router';
 import home from "../views/home.vue"
 import dashboard from "../views/dashboard.vue"
 import pruebaAPI from "../views/pruebaAPI.vue"
-import createVm from "../views/createVm.vue"
-import editVm from "../views/editVm.vue"
 import modaltest from "../views/Modaltest.vue"
 
 Vue.use(Router);
@@ -29,18 +27,6 @@ const routes = [{
     name: 'dashboard',
     meta: { authOnly: true }
 
-},
-
-{
-    path: '/createVirtualMachine',
-    component: createVm,
-    name: 'createVm'
-},
-
-{
-    path: '/editVirtualMachine/:id',
-    component: editVm,
-    name: 'editVm'
 },
 
 {

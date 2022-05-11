@@ -31,7 +31,6 @@
               </b-avatar>
               {{user.name}} {{user.lastname}}
             </template>
-            <b-dropdown-item href="#">El meu perfil</b-dropdown-item>
             <b-dropdown-item @click.prevent="logout">Sortir</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>

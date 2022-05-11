@@ -1,18 +1,5 @@
 <template>
-  <section id="CreateVM">
-    <!-- debe estar config para que se  muestre sólo sí se crea una mv-->
-    <b-card
-      v-if="user"
-      bg-variant="white"
-      text-variant="dark"
-      class="border-0 shadow my-5"
-    >
-      <h3>¡Benvingut/Benvinguda {{ user.name }}!</h3>
-      <b-card-text> T'has loguejat des de {{ user.email }} </b-card-text>
-      <b-button href="#" @click="showModal" variant="primary" class="ml-0">
-        Crear Máquina Virtual
-      </b-button>
-    </b-card>
+  <section id="EditModal">
     <b-modal
       body-class="p-0"
       ref="modal"
@@ -201,7 +188,7 @@
 import User from "../apis/User";
 import Vm from "../apis/Vm";
 export default {
-  name: "CreateVM",
+  name: "EditModal",
   components: {},
   props: {
     hola: Function,
@@ -322,8 +309,8 @@ export default {
 }
 
 .btn-primary:hover{
-  background-color:#f74a2d ;
-  border-color:#f86b50;
+  background-color:#ff8364 ;
+  border-color:#ff8364;
 }
 </style>
 
