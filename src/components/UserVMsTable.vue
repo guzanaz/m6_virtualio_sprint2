@@ -18,7 +18,8 @@
             responsive
             outlined
             striped
-            :sort-by.sync="items"
+            :sort-by.sync="sortBy"
+            :sort-desc.sync="sortDesc"
             :items="items"
             :filter="filter"
             :per-page="perPage"
@@ -26,13 +27,12 @@
             :fields="fields"
           >
             <template #cell(actions)="{ item }">
-              <!-- <template v-slot:cell(actions)="item" >-->
               <b-button
                 v-b-tooltip.hover.left="'Arrancar'"
                 variant="outline-primary"
                 class="mr-1 mb-1 mb-sm-1 mb-md-0"
                 pill
-                @click="runVm(item)"
+                @click="start(item)"
               >
                 <b-icon
                   style="vertical-align: unset"
@@ -114,6 +114,8 @@ export default {
     this.showVm();
   },
   data: () => ({
+    sortBy: 'vmid',
+    sortDesc: true,
     show: true,
     items: [],
     fields: [
@@ -181,15 +183,16 @@ export default {
         this.$bvModal.hide("modal-prevent-closing");
       });
     },
-    showVm() {
+    async showVm() {
       console.log("hola desde dashboard");
       //API Call
-      Vm.getAll().then((response) => {
+      await Vm.getAll().then((response) => {
         //pushing data to  that will show inside table
         this.items = response.data.data;
         console.log(response.data.data);
         this.hola();
       });
+      this.refreshTable();
     },
     async deleteItem(item) {
       let id = item.vmid;
@@ -200,6 +203,48 @@ export default {
         console.log(index);
         this.items.splice(index, 1);
       });
+    },
+
+    async start(item) {
+      let id = item.vmid;
+      console.log(item.vmid);
+      // window.open("https://95.129.255.249:18006/?console=kvm&novnc=1&vmid="+item.vmid+"&vmname="+item.name+"&node=pvedaw&resize=off&cmd=");
+      await Vm.start(id).then((response) => {
+        let proxmox = response.data.object.data;
+        console.log("Machine", proxmox);
+        console.log(response);
+        let index = this.items.findIndex((x) => x.vmid == id);
+        console.log(index);
+        this.items.splice(index, 1, proxmox);
+      });
+      this.refreshTable();
+      window.open(
+        "https://95.129.255.249:18006/?console=kvm&novnc=1&vmid=" +
+          item.vmid +
+          "&vmname=" +
+          item.name +
+          "&node=pvedaw&resize=off&cmd="
+      );
+    },
+    async stopVm(item) {
+      let id = item.vmid;
+      console.log(item.vmid);
+      await Vm.stop(id).then((response) => {
+        let proxmox = response.data.object.data;
+        console.log("Machine", proxmox);
+        console.log(response);
+        let index = this.items.findIndex((x) => x.vmid == id);
+        console.log(index);
+        this.items.splice(index, 1, proxmox);
+        console.log(this.items);
+      });
+      this.refreshTable();
+    },
+    refreshTable() {
+      let _this = this;
+      setTimeout(function () {
+        _this.showVm();
+      }, 1000);
     },
   },
 };

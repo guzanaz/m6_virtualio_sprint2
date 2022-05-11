@@ -1,12 +1,17 @@
 <template>
-  <b-navbar fluid toggleable="md" type="light" variant="light" class="m-0">
+  <b-navbar 
+  fluid
+    toggleable="md"
+    type="light"
+    variant="light"
+    class="shadow-sm sticky-top py-3 m-0">
     <b-container>
       <b-navbar-brand href="/home">
         <img
           src="https://wiki.ead.pucv.cl/images/b/b2/Virtualio_logo.svg"
           alt="Virtualio logo"
-          width="162"
-          height="43.31"
+          width="200"
+          height="auto"
         />
       </b-navbar-brand>
 

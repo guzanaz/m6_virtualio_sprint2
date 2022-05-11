@@ -180,7 +180,11 @@
                   <b-button @click="showModal" variant="outline-secondary"
                     >Enrere</b-button
                   >
-                  <b-button @click="hideModal" type="submit" class="px-4" variant="primary"
+                  <b-button
+                    @click="hideModal"
+                    type="submit"
+                    class="px-4"
+                    variant="primary"
                     >Crear</b-button
                   >
                 </b-row>
@@ -199,8 +203,8 @@ import Vm from "../apis/Vm";
 export default {
   name: "CreateVM",
   components: {},
-  props:{
-    hola:Function
+  props: {
+    hola: Function,
   },
   data() {
     return {
@@ -221,8 +225,6 @@ export default {
     };
   },
   mounted() {
-
-    
     //API Call
     User.auth().then((response) => {
       //pushing data
@@ -263,9 +265,8 @@ export default {
         this.$bvModal.hide("modal-prevent-closing");
       });
     },
-
     //2. form methods
-    async onSubmit (event) {
+    onSubmit(event) {
       event.preventDefault();
       var vm = {
         name: this.form.name,
@@ -284,12 +285,11 @@ export default {
         net0: "virtio,bridge=vmbr0,firewall=1",
       };
       //método store
-      await Vm.store(vm).then((response)=>{
-      this.Vm = response.data.data;
-      console.log(response.data.data);
+      Vm.store(vm).then((response) => {
+        console.log(response.data.data);
       });
       this.hola();
-
+      this.refreshTable();
       // alert(JSON.stringify(vm));
     },
     onReset(event) {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <UserNavbar />
+ 
 
     <b-container class="my-5 d-flex justify-content-center" md="12" lg="12">
       <b-button id="show-btn" @click="showModal" variant="dark">
@@ -204,12 +204,12 @@
 </template>
 
 <script>
-import UserNavbar from "../layout/UserNavbar.vue";
+
 
 export default {
   name: "ModalTest",
   components: {
-    UserNavbar,
+
   },
   data() {
     return {

@@ -1,18 +1,18 @@
 <template>
   <div class="hello">
-  <UserNavbar/>
+
   
   </div>
 </template>
 
 <script>
-import UserNavbar from "../layout/UserNavbar.vue";
+
 
 
 export default {
   name: "editVm",
   components:{
-    UserNavbar,
+
 
 
   },  
