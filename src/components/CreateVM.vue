@@ -287,9 +287,9 @@ export default {
       //método store
       Vm.store(vm).then((response) => {
         console.log(response.data.data);
+        this.hola();
+        this.refreshTable();
       });
-      this.hola();
-      this.refreshTable();
       // alert(JSON.stringify(vm));
     },
     onReset(event) {
@@ -317,8 +317,13 @@ export default {
 
 .btn-primary {
   color: #fff;
-  background-color: #ff8364;
-  border-color: #ff8364;
+  background-color: #fd8e72;
+  border-color: #fd8e72;
+}
+
+.btn-primary:hover{
+  background-color:#ff8364 ;
+  border-color:#ff8364;
 }
 </style>
 

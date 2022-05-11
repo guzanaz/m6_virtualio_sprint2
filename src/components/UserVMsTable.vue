@@ -101,12 +101,12 @@
         </b-col>
       </b-row>
     </b-card>
-    <!--<create-vm :showModal="showModal"></create-vm>-->
+   
   </div>
 </template>
 
 <script>
-// import CreateVM from "../components/CreateVM.vue";
+
 import Vm from "../apis/Vm";
 export default {
   components: {},
@@ -155,34 +155,6 @@ export default {
     },
   },
   methods: {
-    showModal() {
-      this.$refs["modal"].show();
-    },
-    hideModal() {
-      this.$refs["modal"].hide();
-    },
-    resetModal() {
-      this.name = "";
-      this.nameState = null;
-    },
-    handleOk(bvModalEvt) {
-      // Prevent modal from closing
-      bvModalEvt.preventDefault();
-      // Trigger submit handler
-      this.handleSubmit();
-    },
-    handleSubmit() {
-      // Exit when the form isn't valid
-      if (!this.checkFormValidity()) {
-        return;
-      }
-      // Push the name to submitted names
-      this.submittedNames.push(this.name);
-      // Hide the modal manually
-      this.$nextTick(() => {
-        this.$bvModal.hide("modal-prevent-closing");
-      });
-    },
     async showVm() {
       console.log("hola desde dashboard");
       //API Call
@@ -190,7 +162,7 @@ export default {
         //pushing data to  that will show inside table
         this.items = response.data.data;
         console.log(response.data.data);
-        this.hola();
+        // this.hola();
       });
       this.refreshTable();
     },
@@ -208,7 +180,6 @@ export default {
     async start(item) {
       let id = item.vmid;
       console.log(item.vmid);
-      // window.open("https://95.129.255.249:18006/?console=kvm&novnc=1&vmid="+item.vmid+"&vmname="+item.name+"&node=pvedaw&resize=off&cmd=");
       await Vm.start(id).then((response) => {
         let proxmox = response.data.object.data;
         console.log("Machine", proxmox);

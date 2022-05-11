@@ -28,23 +28,12 @@ export default {
     };
   },
   methods: {
-    //methodrefresh
-        //Refresh table 
-    refreshTable() {
-      let _this = this;
-      setTimeout(function () {
-        _this.showVm();
-      }, 1000);
-    },
-    //2.method
-  hola() {
-      console.log('ProbandoShow desde dashboard');
-      this.$refs.UserVMsTable.showVm();
-      this.refreshTable();
-      
-    },
-
-
+  // //1.method
+  // hola() {
+  //     console.log('ProbandoShow desde dashboard');
+  //     //this.$refs.UserVMsTable.showVm();  
+  //     this.$refs[UserVMsTable].showVm();  
+  //   },
   },
 };
 </script>
