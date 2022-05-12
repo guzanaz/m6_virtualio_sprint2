@@ -48,7 +48,7 @@
                 variant="outline-secondary"
                 class="mr-1 mb-1 mb-sm-1 mb-lg-0"
                 pill
-               @click="showModal(item)"
+                @click="showModal(item)"
               >
                 <b-icon
                   style="vertical-align: unset"
@@ -113,7 +113,7 @@
       v-model="modalShow"
     >
       <b-row>
-        <b-col cols="4" class="bg-primary rounded-left  py-3">
+        <b-col cols="4" class="bg-primary rounded-left py-3">
           <b-container>
             <b-row class="mt-3">
               <b-img
@@ -140,36 +140,42 @@
             <b-form-group id="input-group-1" label="Nom" label-for="input-1">
               <b-form-input
                 id="input-1"
-                v-model="this.selectedVM.name"
+                @input="selectedVM.name"
+                v-model="selectedVM.name"
                 placeholder="El nom de la teva màquina"
                 required
               ></b-form-input>
             </b-form-group>
             <b-form-group
               id="input-group-2"
-              label="Sistema Operatiu"
+              class="text-muted"
+              label="Sistema Operatiu (no pots editar aquest camp)"
               label-for="input-2"
             >
               <b-form-select
                 id="input-2"
-                
+                :disabled="true"
                 :options="OS"
+                v-model="selected"
                 required
               ></b-form-select>
             </b-form-group>
-            <b-form-group id="input-group-3" label="Versió" label-for="input-3">
+            <b-form-group
+              id="input-group-3"
+              class="text-muted"
+              label="Versió (no pots editar aquest camp)"
+              label-for="input-3"
+            >
               <b-form-select
                 id="input-3"
-                
+                :disabled="true"
                 :options="Version"
                 required
+                v-model="selected"
               ></b-form-select>
             </b-form-group>
             <b-row align-h="end" class="mx-0 mt-5 mb-4">
-              <b-button
-                v-b-modal.edit_2
-                class="px-4"
-                variant="primary"
+              <b-button v-b-modal.edit_2 class="px-4" variant="primary"
                 >Continuar</b-button
               >
             </b-row>
@@ -198,14 +204,11 @@
                   alt="Center image"
                 ></b-img>
               </b-row>
-              <b-row
-                align-h="center"
-                class="row mt-4 mb-4 text-center"
-              >
+              <b-row align-h="center" class="row mt-4 mb-4 text-center">
                 <h5>Editant les memòries</h5>
                 <p class="font-weight-light">
-                Pots editar tant la mida de la RAM a Gigabytes (GB) per a la 
-                teva màquina com també la mida de disc dur virtual.
+                  Pots editar tant la mida de la RAM a Gigabytes (GB) per a la
+                  teva màquina com també la mida de disc dur virtual.
                 </p>
               </b-row>
             </b-container>
@@ -216,27 +219,29 @@
               <b-row align-h="start" class="mx-0 mt-5 mb-2">
                 <h2>Editant les memòries</h2>
               </b-row>
-              <b-form  v-if="show">
+              <b-form v-if="show">
                 <div class="pt-5">
                   <label for="ram_size"
-                    >RAM ({{ this.selectedVM.maxmem / 1073741824 }} Gigabytes)</label
+                    >RAM ({{ selectedVM.maxmem }} Gigabytes)</label
                   >
                   <b-form-input
                     id="ram_size"
-                    v-model="this.selectedVM.maxmem"
+                    @input="toGBMaxMem(selectedVM.maxmem)"
+                    v-model="selectedVM.maxmem"
                     type="range"
                     min="4"
-                    max="16"
+                    max="30"
                   >
                   </b-form-input>
                 </div>
                 <div class="pt-5">
                   <label for="disk_capacity"
-                    >Disc Dur Virtual ({{ this.selectedVM.maxdisk / 1073741824}} Gigabytes)</label
-                  >
+                    >Disc Dur Virtual ({{ selectedVM.maxdisk }} Gigabytes)
+                  </label>
                   <b-form-input
                     id="disk_capacity"
-                    v-model="this.selectedVM.maxdisk" 
+                    @input="toGBMaxDisk(selectedVM.maxdisk)"
+                    v-model="selectedVM.maxdisk"
                     type="range"
                     min="10"
                     max="20"
@@ -245,11 +250,11 @@
                 </div>
                 <b-row align-h="end" class="mx-0 mt-5 py-4">
                   <b-button @click="showFirstModal" variant="outline-secondary"
-                  >Enrere</b-button
+                    >Enrere</b-button
                   >
                   <b-button
-                    type="submit"
                     class="px-4"
+                    type="submit"
                     variant="primary"
                     >Actualitzar</b-button
                   >
@@ -272,7 +277,11 @@ export default {
     this.showVm();
   },
   data: () => ({
-    selectedVM:{},
+    selectedVM: {},
+    newRam: "",
+    newDisk: "",
+    textName: "",
+    total: "",
     modalShow: false,
     sortBy: "vmid",
     sortDesc: true,
@@ -289,16 +298,17 @@ export default {
     filter: "",
     perPage: 6,
     currentPage: 1,
-      form: {
-        name: "",
-        OS: "",
-        Version: "",
-        RamSize: "",
-        DiskCapacity: "",
-      },
-      OS: [{ text: "Definir", value: null }, "ubuntu"],
+    selected: null,
+    form: {
+      name: "",
+      OS: "ubuntu",
+      Version: "22.04",
+      RamSize: "",
+      DiskCapacity: "",
+    },
+    OS: [{ text: "ubuntu", value: null }, "ubuntu"],
 
-      Version: [{ text: "Definir", value: null }, "22.04"],
+    Version: [{ text: "22.04", value: null }, "22.04"],
   }),
   types: [
     "text",
@@ -324,14 +334,20 @@ export default {
     },
   },
   methods: {
+    hideModal() {
+      this.$refs["edit_2"].hide();
+    },
     showModal(item) {
+      console.log(item);
       this.selectedVM = item;
+      this.selectedVM.maxmem = item.maxmem / 1073741824;
+      this.selectedVM.maxdisk = item.maxdisk / 1073741824;
       console.log(item);
       this.$bvModal.hide("edit_2");
       this.$refs["edit_1"].show();
     },
-    showFirstModal(){
-       this.$bvModal.hide("edit_2");
+    showFirstModal() {
+      this.$bvModal.hide("edit_2");
       this.$refs["edit_1"].show();
     },
     async showVm() {
@@ -340,10 +356,12 @@ export default {
       await Vm.getAll().then((response) => {
         //pushing data to  that will show inside table
         this.items = response.data.data;
-        console.log(response.data.data);
-        // this.hola();
+        this.items.forEach((disk) => {
+          disk.maxdisk = disk.maxdisk / 1073741824;
+          disk.maxmem = disk.maxmem / 1073741824;
+        });
       });
-      this.refreshTable();
+      //this.refreshTable();
     },
     async deleteItem(item) {
       let id = item.vmid;
@@ -394,29 +412,34 @@ export default {
       let _this = this;
       setTimeout(function () {
         _this.showVm();
-      }, 10000);
+      }, 30000);
     },
 
-    async updateVm(item) {
-      console.log(item);
-      this.selectedVM = item;
-      let id = item.vmid;
-      await Vm.update(id).then((response) => {
-        let proxmox = response.data.object.data;
-        console.log("Machine", proxmox);
-        console.log(response);
-        let index = this.items.findIndex((x) => x.vmid == id);
-        console.log(index);
-        this.items.splice(index, 1, proxmox);
-        console.log(this.items);
-      });
-      this.refreshTable();
-    },
-     //2. form methods
-    Submit(event) {
+    onSubmit(event) {
       event.preventDefault();
-      event.updateVm();
+      var vm = {
+        vmid: this.selectedVM.vmid,
+        name: this.selectedVM.name,
+        maxmem: this.selectedV.maxmem * 1024,
+        maxdisk: this.selected.maxdisk * 1024,
+      };
+      Vm.update(vm).then((response) => {
+        console.log(vm);
+        console.log(response.data.data);
+        //this.refreshTable();
+      });
     },
+    //2. form methods
+    //divide
+    toGBMaxMem(total) {
+      this.selectedVM.maxmem = total;
+    },
+    toGBMaxDisk(total) {
+      this.selectedVM.maxdisk = total;
+    },
+    newName(textName) {
+      this.selectedVM.name = textName;
+    }
   },
 };
 </script>
@@ -444,7 +467,7 @@ tr {
   text-align: right;
 }
 
-.btn-primary{
-  color:#ffffff;
+.btn-primary {
+  color: #ffffff;
 }
 </style>

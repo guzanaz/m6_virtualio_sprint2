@@ -207,8 +207,8 @@ export default {
         name: "",
         OS: null,
         Version: null,
-        RamSize: 0,
-        DiskCapacity: 0,
+        RamSize: 4,
+        DiskCapacity: 4,
       },
       OS: [{ text: "Definir", value: null }, "ubuntu"],
 
