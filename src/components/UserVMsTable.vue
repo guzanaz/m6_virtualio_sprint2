@@ -48,7 +48,7 @@
                 variant="outline-secondary"
                 class="mr-1 mb-1 mb-sm-1 mb-lg-0"
                 pill
-                @click="modalShow = !modalShow"
+               @click="showModal(item)"
               >
                 <b-icon
                   style="vertical-align: unset"
@@ -59,17 +59,6 @@
                 >
                 </b-icon>
               </b-button>
-
-              <b-modal
-                body-class="p-0"
-                no-stacking
-                hide-header
-                hide-footer
-                title="Editant màquina Virtual"
-                size="lg"
-                v-model="modalShow"
-                >Hello From Modal!
-              </b-modal>
 
               <b-button
                 v-b-tooltip.hover.top="'Parar'"
@@ -112,6 +101,165 @@
         </b-col>
       </b-row>
     </b-card>
+    <b-modal
+      ref="edit_1"
+      id="edit_1"
+      body-class="p-0"
+      no-stacking
+      hide-header
+      hide-footer
+      title="Editant màquina Virtual"
+      size="lg"
+      v-model="modalShow"
+    >
+      <b-row>
+        <b-col cols="4" class="bg-primary rounded-left  py-3">
+          <b-container>
+            <b-row class="mt-3">
+              <b-img
+                center
+                src="https://svgshare.com/i/emu.svg"
+                alt="Center image"
+              ></b-img>
+            </b-row>
+            <b-row align-h="center" class="row mt-4 mb-4 text-center">
+              <h5>Editant la teva màquina</h5>
+              <p class="font-weight-light">
+                Aquí pots modificar la configuració inicial de la teva màquina
+                virtual
+              </p>
+            </b-row>
+          </b-container>
+        </b-col>
+        <b-col cols="8">
+          <b-container fluid>
+            <b-row align-h="start" class="mx-0 mt-5 mb-2">
+              <h2>Editant la teva màquina</h2>
+            </b-row>
+
+            <b-form-group id="input-group-1" label="Nom" label-for="input-1">
+              <b-form-input
+                id="input-1"
+                v-model="this.selectedVM.name"
+                placeholder="El nom de la teva màquina"
+                required
+              ></b-form-input>
+            </b-form-group>
+            <b-form-group
+              id="input-group-2"
+              label="Sistema Operatiu"
+              label-for="input-2"
+            >
+              <b-form-select
+                id="input-2"
+                
+                :options="OS"
+                required
+              ></b-form-select>
+            </b-form-group>
+            <b-form-group id="input-group-3" label="Versió" label-for="input-3">
+              <b-form-select
+                id="input-3"
+                
+                :options="Version"
+                required
+              ></b-form-select>
+            </b-form-group>
+            <b-row align-h="end" class="mx-0 mt-5 mb-4">
+              <b-button
+                v-b-modal.edit_2
+                class="px-4"
+                variant="primary"
+                >Continuar</b-button
+              >
+            </b-row>
+          </b-container>
+        </b-col>
+      </b-row>
+    </b-modal>
+    <b-modal
+      body-class="p-0"
+      id="edit_2"
+      ref="edit_2"
+      no-stacking
+      hide-header
+      hide-footer
+      size="lg"
+    >
+      <!-- grupo para editar capacidad de la máquina virtual -->
+      <b-container fluid="sm">
+        <b-row>
+          <b-col cols="4" rounded="left" class="bg-primary py-3">
+            <b-container>
+              <b-row class="mt-3">
+                <b-img
+                  center
+                  src="https://svgshare.com/i/esL.svg' title='modal_img2"
+                  alt="Center image"
+                ></b-img>
+              </b-row>
+              <b-row
+                align-h="center"
+                class="row mt-4 mb-4 text-center"
+              >
+                <h5>Editant les memòries</h5>
+                <p class="font-weight-light">
+                Pots editar tant la mida de la RAM a Gigabytes (GB) per a la 
+                teva màquina com també la mida de disc dur virtual.
+                </p>
+              </b-row>
+            </b-container>
+          </b-col>
+          <!-- -->
+          <b-col cols="8">
+            <b-container fluid>
+              <b-row align-h="start" class="mx-0 mt-5 mb-2">
+                <h2>Editant les memòries</h2>
+              </b-row>
+              <b-form  v-if="show">
+                <div class="pt-5">
+                  <label for="ram_size"
+                    >RAM ({{ this.selectedVM.maxmem / 1073741824 }} Gigabytes)</label
+                  >
+                  <b-form-input
+                    id="ram_size"
+                    v-model="this.selectedVM.maxmem"
+                    type="range"
+                    min="4"
+                    max="16"
+                  >
+                  </b-form-input>
+                </div>
+                <div class="pt-5">
+                  <label for="disk_capacity"
+                    >Disc Dur Virtual ({{ this.selectedVM.maxdisk / 1073741824}} Gigabytes)</label
+                  >
+                  <b-form-input
+                    id="disk_capacity"
+                    v-model="this.selectedVM.maxdisk" 
+                    type="range"
+                    min="10"
+                    max="20"
+                  >
+                  </b-form-input>
+                </div>
+                <b-row align-h="end" class="mx-0 mt-5 py-4">
+                  <b-button @click="showFirstModal" variant="outline-secondary"
+                  >Enrere</b-button
+                  >
+                  <b-button
+                    type="submit"
+                    class="px-4"
+                    variant="primary"
+                    >Actualitzar</b-button
+                  >
+                </b-row>
+              </b-form>
+            </b-container>
+          </b-col>
+        </b-row>
+      </b-container>
+    </b-modal>
   </div>
 </template>
 
@@ -124,6 +272,7 @@ export default {
     this.showVm();
   },
   data: () => ({
+    selectedVM:{},
     modalShow: false,
     sortBy: "vmid",
     sortDesc: true,
@@ -140,8 +289,17 @@ export default {
     filter: "",
     perPage: 6,
     currentPage: 1,
+      form: {
+        name: "",
+        OS: "",
+        Version: "",
+        RamSize: "",
+        DiskCapacity: "",
+      },
+      OS: [{ text: "Definir", value: null }, "ubuntu"],
+
+      Version: [{ text: "Definir", value: null }, "22.04"],
   }),
-  modalShow: false,
   types: [
     "text",
     "number",
@@ -166,8 +324,15 @@ export default {
     },
   },
   methods: {
-    showModal() {
-      this.$refs["editVm"].show();
+    showModal(item) {
+      this.selectedVM = item;
+      console.log(item);
+      this.$bvModal.hide("edit_2");
+      this.$refs["edit_1"].show();
+    },
+    showFirstModal(){
+       this.$bvModal.hide("edit_2");
+      this.$refs["edit_1"].show();
     },
     async showVm() {
       console.log("hola desde dashboard");
@@ -229,7 +394,28 @@ export default {
       let _this = this;
       setTimeout(function () {
         _this.showVm();
-      }, 1000);
+      }, 10000);
+    },
+
+    async updateVm(item) {
+      console.log(item);
+      this.selectedVM = item;
+      let id = item.vmid;
+      await Vm.update(id).then((response) => {
+        let proxmox = response.data.object.data;
+        console.log("Machine", proxmox);
+        console.log(response);
+        let index = this.items.findIndex((x) => x.vmid == id);
+        console.log(index);
+        this.items.splice(index, 1, proxmox);
+        console.log(this.items);
+      });
+      this.refreshTable();
+    },
+     //2. form methods
+    Submit(event) {
+      event.preventDefault();
+      event.updateVm();
     },
   },
 };
@@ -256,5 +442,9 @@ tr {
 .botones-modal {
   margin-top: 0.8rem;
   text-align: right;
+}
+
+.btn-primary{
+  color:#ffffff;
 }
 </style>

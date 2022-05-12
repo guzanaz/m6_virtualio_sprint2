@@ -98,8 +98,8 @@
     </b-modal>
     <b-modal
       body-class="p-0"
-      id="modal-vm-capacity"
-      ref="modal-vm-capacity"
+      id="editar_2"
+      ref="editar_2"
       no-stacking
       hide-header
       hide-footer

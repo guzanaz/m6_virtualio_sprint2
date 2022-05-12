@@ -7,7 +7,7 @@
       text-variant="dark"
       class="border-0 shadow my-5"
     >
-      <h3>¡Benvingut/Benvinguda {{ user.name }}!</h3>
+      <h3>¡Enhorabona {{ user.name }}!</h3>
       <b-card-text> T'has loguejat des de {{ user.email }} </b-card-text>
       <b-button href="#" @click="showModal" variant="primary" class="ml-0">
         Crear Máquina Virtual
@@ -46,10 +46,6 @@
                   És hora de posar un nom a la teva màquina, definir un sistema
                   operatiu i una versió del mateix.
                 </p>
-              </b-row>
-
-              <b-row align-h="center" class="row mb-4 text-light text-center">
-                <b-progress :value="value" class="w-100"></b-progress>
               </b-row>
             </b-container>
           </b-col>
@@ -119,7 +115,7 @@
       <!-- grupo para editar capacidad de la máquina virtual -->
       <b-container fluid="sm">
         <b-row>
-          <b-col cols="4" class="bg-secondary py-3">
+          <b-col cols="4" class="bg-secondary rounded-left py-3">
             <b-container>
               <b-row class="mt-3">
                 <b-img
@@ -137,9 +133,6 @@
                   Fixa la mida de la RAM en Gigabytes (GB) per a la teva màquina
                   y assigna la mida de disc dur virtual.
                 </p>
-              </b-row>
-              <b-row align-h="center" class="row mb-4 text-light text-center">
-                <b-progress :value="value" class="w-100"></b-progress>
               </b-row>
             </b-container>
           </b-col>
@@ -209,7 +202,6 @@ export default {
   data() {
     return {
       user: "",
-      value: 0,
       modalShow: false,
       form: {
         name: "",
