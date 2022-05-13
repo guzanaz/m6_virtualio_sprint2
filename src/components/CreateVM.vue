@@ -8,22 +8,20 @@
       class="border-0 shadow my-5"
     >
       <h3>¡Enhorabona {{ user.name }}!</h3>
-      <b-card-text> T'has loguejat des de {{ user.email }} </b-card-text>
+      <b-card-text> Has iniciat sessió correctament des de {{ user.email }} </b-card-text>
       <b-button href="#" @click="showModal" variant="primary" class="ml-0">
         Crear Máquina Virtual
       </b-button>
     </b-card>
     <b-modal
       body-class="p-0"
-      ref="modal"
+      ref="create_1"
+      id="create_1"
       no-stacking
       hide-header
       hide-footer
       title="Editant màquina Virtual"
       size="lg"
-      @show="resetModal"
-      @hidden="resetModal"
-      @ok="handleOk"
     >
       <!-- grupo para crear nombre de la máquina virtual -->
       <b-container fluid="sm">
@@ -58,7 +56,7 @@
               <b-form-group id="input-group-1" label="Nom" label-for="input-1">
                 <b-form-input
                   id="input-1"
-                  v-model="form.name"
+                  v-model="Vm.name"
                   placeholder="El nom de la teva màquina"
                   required
                 ></b-form-input>
@@ -70,7 +68,7 @@
               >
                 <b-form-select
                   id="input-2"
-                  v-model="form.OS"
+                  v-model="Vm.OS"
                   :options="OS"
                   required
                 ></b-form-select>
@@ -82,14 +80,14 @@
               >
                 <b-form-select
                   id="input-3"
-                  v-model="form.Version"
+                  v-model="Vm.Version"
                   :options="Version"
                   required
                 ></b-form-select>
               </b-form-group>
               <b-row align-h="end" class="mx-0 mt-5 mb-4">
                 <b-button
-                  v-b-modal.modal-vm-capacity
+                  v-b-modal.create_2
                   class="px-4"
                   variant="primary"
                   >Continuar</b-button
@@ -102,15 +100,12 @@
     </b-modal>
     <b-modal
       body-class="p-0"
-      id="modal-vm-capacity"
-      ref="modal-vm-capacity"
+      id="create_2"
+      ref="create_2"
       no-stacking
       hide-header
       hide-footer
       size="lg"
-      @show="resetModal"
-      @hidden="resetModal"
-      @ok="handleOk"
     >
       <!-- grupo para editar capacidad de la máquina virtual -->
       <b-container fluid="sm">
@@ -142,14 +137,14 @@
               <b-row align-h="start" class="mx-0 mt-5 mb-2">
                 <h2>Memòries</h2>
               </b-row>
-              <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+              <b-form @submit.prevent="create" v-if="show">
                 <div class="pt-5">
                   <label for="ram_size"
-                    >RAM ({{ form.RamSize }} Gigabytes)</label
+                    >RAM ({{ Vm.RamSize }} Gigabytes)</label
                   >
                   <b-form-input
                     id="ram_size"
-                    v-model="form.RamSize"
+                    v-model="Vm.RamSize"
                     type="range"
                     min="4"
                     max="16"
@@ -158,11 +153,11 @@
                 </div>
                 <div class="pt-5">
                   <label for="disk_capacity"
-                    >Disc Dur Virtual ({{ form.DiskCapacity }} Gigabytes)</label
+                    >Disc Dur Virtual ({{ Vm.DiskCapacity }} Gigabytes)</label
                   >
                   <b-form-input
                     id="disk_capacity"
-                    v-model="form.DiskCapacity"
+                    v-model="Vm.DiskCapacity"
                     type="range"
                     min="10"
                     max="50"
@@ -174,7 +169,6 @@
                     >Enrere</b-button
                   >
                   <b-button
-                    @click="hideModal"
                     type="submit"
                     class="px-4"
                     variant="primary"
@@ -196,14 +190,11 @@ import Vm from "../apis/Vm";
 export default {
   name: "CreateVM",
   components: {},
-  props: {
-    hola: Function,
-  },
   data() {
     return {
       user: "",
       modalShow: false,
-      form: {
+      Vm: {
         name: "",
         OS: null,
         Version: null,
@@ -229,69 +220,46 @@ export default {
   methods: {
     //1. modal methods
     showModal() {
-      this.$refs["modal"].show();
+      this.$refs["create_1"].show();
     },
     hideModal() {
-      this.$refs["modal-vm-capacity"].hide();
-    },
-
-    resetModal() {
-      this.name = "";
-      this.nameState = null;
-    },
-    handleOk(bvModalEvt) {
-      // Prevent modal from closing
-      bvModalEvt.preventDefault();
-      // Trigger submit handler
-      this.handleSubmit();
-    },
-    handleSubmit() {
-      // Exit when the form isn't valid
-      if (!this.checkFormValidity()) {
-        return;
-      }
-      // Push the name to submitted names
-      this.submittedNames.push(this.name);
-      // Hide the modal manually
-      this.$nextTick(() => {
-        this.$bvModal.hide("modal-prevent-closing");
-      });
+      this.$refs["create_2"].hide();
     },
     //2. form methods
-    onSubmit(event) {
-      event.preventDefault();
+    create() {
+      console.log(this.Vm);
       var vm = {
-        name: this.form.name,
+        name: this.Vm.name,
         ide2:
           "local:iso/" +
-          this.form.OS +
+          this.Vm.OS +
           "-" +
-          this.form.Version +
+          this.Vm.Version +
           "-desktop-amd64.iso,media=cdrom",
         ostype: "l26",
         scsihw: "virtio-scsi-pci",
         sockets: 2,
-        sata0: "local-lvm:" + this.form.DiskCapacity,
+        sata0: "local-lvm:" + this.Vm.DiskCapacity,
         cores: 2,
-        memory: this.form.RamSize * 1024,
+        memory: this.Vm.RamSize * 1024,
         net0: "virtio,bridge=vmbr0,firewall=1",
       };
+      console.log(vm);
       //método store
       Vm.store(vm).then((response) => {
         console.log(response.data.data);
-        this.hola();
-        this.refreshTable();
+        this.onReset();
+        this.hideModal();
+        window.location.reload();
       });
-      // alert(JSON.stringify(vm));
     },
-    onReset(event) {
-      event.preventDefault();
+    onReset() {
       // Reset our form values
-      this.form.name = "";
-      this.form.OS = null;
-      this.form.Version = null;
-      this.form.RamSize = 0;
-      this.form.DiskCapacity = 0;
+      this.Vm.name = "";
+      this.Vm.OS = null;
+      this.Vm.Version = null;
+      this.Vm.RamSize = 0;
+      this.Vm.DiskCapacity = 0;
       // Trick to reset/clear native browser form validation state
       this.show = false;
       this.$nextTick(() => {

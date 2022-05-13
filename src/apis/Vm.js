@@ -26,8 +26,8 @@ export default {
         return Api.post("/VirtualMachine/stop/" + vmid);
     },
 
-    async update(vm) {
-        return Api.put("/VirtualMachine" + vm.vmid, vm);
+    async update(id, vm) {
+        return Api.put("/VirtualMachine/" + id, vm);
     }
 
 }

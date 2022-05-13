@@ -140,7 +140,6 @@
             <b-form-group id="input-group-1" label="Nom" label-for="input-1">
               <b-form-input
                 id="input-1"
-                @input="selectedVM.name"
                 v-model="selectedVM.name"
                 placeholder="El nom de la teva màquina"
                 required
@@ -219,7 +218,7 @@
               <b-row align-h="start" class="mx-0 mt-5 mb-2">
                 <h2>Editant les memòries</h2>
               </b-row>
-              <b-form v-if="show">
+              <b-form @submit.prevent="update" v-if="show">
                 <div class="pt-5">
                   <label for="ram_size"
                     >RAM ({{ selectedVM.maxmem }} Gigabytes)</label
@@ -230,7 +229,7 @@
                     v-model="selectedVM.maxmem"
                     type="range"
                     min="4"
-                    max="30"
+                    max="16"
                   >
                   </b-form-input>
                 </div>
@@ -244,7 +243,7 @@
                     v-model="selectedVM.maxdisk"
                     type="range"
                     min="10"
-                    max="20"
+                    max="50"
                   >
                   </b-form-input>
                 </div>
@@ -252,10 +251,7 @@
                   <b-button @click="showFirstModal" variant="outline-secondary"
                     >Enrere</b-button
                   >
-                  <b-button
-                    class="px-4"
-                    type="submit"
-                    variant="primary"
+                  <b-button class="px-4" type="submit" variant="primary"
                     >Actualitzar</b-button
                   >
                 </b-row>
@@ -340,8 +336,6 @@ export default {
     showModal(item) {
       console.log(item);
       this.selectedVM = item;
-      this.selectedVM.maxmem = item.maxmem / 1073741824;
-      this.selectedVM.maxdisk = item.maxdisk / 1073741824;
       console.log(item);
       this.$bvModal.hide("edit_2");
       this.$refs["edit_1"].show();
@@ -349,6 +343,12 @@ export default {
     showFirstModal() {
       this.$bvModal.hide("edit_2");
       this.$refs["edit_1"].show();
+    },
+    refreshTable() {
+      let _this = this;
+      setTimeout(function () {
+        _this.showVm();
+      }, 5000);
     },
     async showVm() {
       console.log("hola desde dashboard");
@@ -361,7 +361,6 @@ export default {
           disk.maxmem = disk.maxmem / 1073741824;
         });
       });
-      //this.refreshTable();
     },
     async deleteItem(item) {
       let id = item.vmid;
@@ -369,8 +368,8 @@ export default {
       await Vm.destroy(id).then((response) => {
         console.log(response);
         let index = this.items.findIndex((x) => x.vmid == id);
-        console.log(index);
         this.items.splice(index, 1);
+        this.refreshTable();
       });
     },
 
@@ -378,55 +377,36 @@ export default {
       let id = item.vmid;
       console.log(item.vmid);
       await Vm.start(id).then((response) => {
-        let proxmox = response.data.object.data;
-        console.log("Machine", proxmox);
         console.log(response);
-        let index = this.items.findIndex((x) => x.vmid == id);
-        console.log(index);
-        this.items.splice(index, 1, proxmox);
+        this.refreshTable();
+        window.open(
+          "https://95.129.255.249:18006/?console=kvm&novnc=1&vmid=" +
+            item.vmid +
+            "&vmname=" +
+            item.name +
+            "&node=pvedaw&resize=off&cmd="
+        );
       });
-      this.refreshTable();
-      window.open(
-        "https://95.129.255.249:18006/?console=kvm&novnc=1&vmid=" +
-          item.vmid +
-          "&vmname=" +
-          item.name +
-          "&node=pvedaw&resize=off&cmd="
-      );
     },
     async stopVm(item) {
       let id = item.vmid;
-      console.log(item.vmid);
       await Vm.stop(id).then((response) => {
-        let proxmox = response.data.object.data;
-        console.log("Machine", proxmox);
         console.log(response);
-        let index = this.items.findIndex((x) => x.vmid == id);
-        console.log(index);
-        this.items.splice(index, 1, proxmox);
-        console.log(this.items);
+        this.refreshTable();
       });
-      this.refreshTable();
     },
-    refreshTable() {
-      let _this = this;
-      setTimeout(function () {
-        _this.showVm();
-      }, 30000);
-    },
-
-    onSubmit(event) {
-      event.preventDefault();
+    async update() {
+      let id = this.selectedVM.vmid;
       var vm = {
-        vmid: this.selectedVM.vmid,
         name: this.selectedVM.name,
-        maxmem: this.selectedV.maxmem * 1024,
-        maxdisk: this.selected.maxdisk * 1024,
+        memory: this.selectedVM.maxmem * 1024,
+        sata0: 'local-lvm:' + this.selectedVM.maxdisk,
       };
-      Vm.update(vm).then((response) => {
-        console.log(vm);
-        console.log(response.data.data);
-        //this.refreshTable();
+
+      await Vm.update(id, vm).then((response) => {
+        console.log(response);
+        this.hideModal();
+        this.refreshTable();
       });
     },
     //2. form methods
@@ -439,7 +419,7 @@ export default {
     },
     newName(textName) {
       this.selectedVM.name = textName;
-    }
+    },
   },
 };
 </script>

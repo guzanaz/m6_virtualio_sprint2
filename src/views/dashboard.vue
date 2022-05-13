@@ -3,7 +3,7 @@
     <UserNavbarSprint3 />
     <div>
       <b-container>
-        <CreateVM :hola="hola" />
+        <CreateVM/>
         <UserVMsTable ref="UserVMsTable" />
       </b-container>
     </div>
@@ -26,14 +26,6 @@ export default {
     return {
       bg: {},
     };
-  },
-  methods: {
-  // //1.method
-  // hola() {
-  //     console.log('ProbandoShow desde dashboard');
-  //     //this.$refs.UserVMsTable.showVm();  
-  //     this.$refs[UserVMsTable].showVm();  
-  //   },
   },
 };
 </script>
